@@ -1,0 +1,34 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+header {
+    font-family: var(--ff1);
+}
+
+body {
+    font-family: var(--ff2);
+}
+
+.custom-bg-titolone {
+    color: var(--d-orange)
+}
+
+.custom-text-title {
+    color: var(--d-blue);
+}
+
+.btn-custom-secondary {
+    background-color: var(--p-orange);
+    color: var(--white);
+}
+
+.btn-custom-secondary:hover {
+    background-color: var(--d-orange);
+    color: var(--white);
+}
+
+.text-custom-secondary {
+    color: var(--l-blue);
+}

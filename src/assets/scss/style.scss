@@ -1,0 +1,16 @@
+:root {
+    --p-orange: #ffa83d;
+    --d-blue: #4888a8;
+    --l-blue: #99b6c4;
+    --l-orange: #ffd199;
+    --d-orange: #ff8330;
+    --black: #000;
+    --white: #fff;
+    --text: #111;
+    --bgc: #f5f5f5;
+    --ff1: "Ubuntu", sans-serif;
+    --ff2: "Jost", sans-serif;
+}
+
+@import 'bootstrap/scss/bootstrap';
+@import 'generals.scss';
