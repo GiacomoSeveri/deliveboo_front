@@ -18,10 +18,10 @@ export default {
     </div>
     </form>
     <!-- <input type="checkbox">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <input type="checkbox">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <input type="checkbox">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <input type="checkbox">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <input type="checkbox"> -->
+        <input type="checkbox">
+        <input type="checkbox">
+        <input type="checkbox">
+        <input type="checkbox"> -->
 </template>
 
 <style lang="scss" scoped>
