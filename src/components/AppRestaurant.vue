@@ -10,7 +10,7 @@ export default {
         <div class="card">
             <img :src="restaurant.image" class="img-fluid img-res-custom" :alt="restaurant.name">
             <div class="card-body">
-                <h3 class="card-title text-uppercase custom-text-title">{{ restaurant.name }}</h3>
+                <h3 class="card-title custom-text-title">{{ restaurant.name }}</h3>
                 <p class="card-text p-card">{{ restaurant.description }}</p>
                 <!-- <ul class="list-group list-group-flush"> -->
                 <span v-for="res_type in restaurant.types" class="me-3 text-custom-secondary">{{ res_type.name }}</span>
