@@ -18,10 +18,10 @@ export default {
     </div>
     </form>
     <!-- <input type="checkbox">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                            <input type="checkbox">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                            <input type="checkbox">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                            <input type="checkbox">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                            <input type="checkbox"> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <input type="checkbox">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <input type="checkbox">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <input type="checkbox">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <input type="checkbox"> -->
 </template>
 
 <style lang="scss" scoped>
@@ -42,10 +42,12 @@ p {
     font-weight: 600;
     font-size: 20px;
     color: var(--d-blue);
+    transition: all 0.1s;
 }
 
 i {
     color: var(--d-blue);
+    transition: all 0.1s;
 }
 
 
