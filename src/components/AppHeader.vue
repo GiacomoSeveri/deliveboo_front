@@ -6,20 +6,35 @@ export default {
 
 <template>
     <nav class="navbar navbar-expand-md bg-orange">
-        <div class="container">
+        <div class="container-lg">
             <div class="container d-flex justify-content-between">
-                <div class="collapse navbar-collapse d-flex justify-content-between align-items-center"
+                <div class="collapse navbar-collapse d-flex justify-content-between align-items-center p-0"
                     id="navbarSupportedContent">
+
                     <!-- Left Side Of Navbar -->
                     <div class="navMenu d-flex align-items-center">
                         <a class="mx-3 logo d-flex align-items-center" href="{{ route('dashboard') }}">
                             <img src="img/logo-400x400.png" alt="logo deliveboo" class="d-flex align-items-center">
-                            <h2 class="m-0 ms-2 p-0 fw-bold">DeliveBoo</h2>
+                            <h2 class="m-0 ms-2 p-0 fw-bold d-md-block d-none">DeliveBoo</h2>
                         </a>
                     </div>
-                    <div class="mt-2">
+
+                    <!-- right Side Of Navbar -->
+                    <div class="dropdown d-lg-none d-block mt-3">
+                        <button class=" border-0 bg-transparent text-white" type="button" data-bs-toggle="dropdown">
+                            <i class="fa-regular fa-user fs-2 " style="color: #fff;"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li> <a href="http://127.0.0.1:8000/login"
+                                    class="me-3 hover-underline-animation dropdown-item text-dark">logIn()</a></li>
+                            <li><a href="http://127.0.0.1:8000/register"
+                                    class="hover-underline-animation dropdown-item text-dark">createAccount()</a></li>
+                        </ul>
+                    </div>
+                    <div class="d-none d-lg-flex justify-content-center align-items-center mt-3 mx-2">
                         <a href="http://127.0.0.1:8000/login" class="me-3 hover-underline-animation">logIn()</a>
                         <a href="http://127.0.0.1:8000/register" class="hover-underline-animation">createAccount()</a>
+
                     </div>
                 </div>
             </div>
@@ -70,5 +85,9 @@ export default {
 .hover-underline-animation:hover:after {
     transform: scaleX(1);
     transform-origin: bottom left;
+}
+
+.dropdown-menu {
+    transform: translateX(-80%);
 }
 </style>

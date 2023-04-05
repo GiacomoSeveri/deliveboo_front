@@ -1,5 +1,7 @@
-import { createApp } from 'vue'
+import { createApp } from 'vue';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import App from './App.vue'
+import 'bootstrap/dist/js/bootstrap.min.js';
+// import * as Popper from "@popperjs/core";
+import App from './App.vue';
 
 createApp(App).mount('#app')
