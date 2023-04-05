@@ -7,7 +7,7 @@ export default {
 <template>
     <div class="container">
 
-        <div class="d-flex justify-content-end my-5 me-2 fs-5">
+        <div class="d-flex justify-content-end my-5 fs-5">
             <form class="">
                 <input class="text-custom-secondary border-c" type="text" placeholder="cercaRistorante()">
                 <button class="border-c" type="submit"><i class="fa fa-search custom-text-title"></i></button>

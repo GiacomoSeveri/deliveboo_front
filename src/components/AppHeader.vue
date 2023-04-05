@@ -6,8 +6,8 @@ export default {
 
 <template>
     <nav class="navbar navbar-expand-md bg-orange">
-        <div class="container-lg">
-            <div class="container d-flex justify-content-between">
+        <div class="container">
+            <div class="w-100 d-flex justify-content-between">
                 <div class="collapse navbar-collapse d-flex justify-content-between align-items-center p-0"
                     id="navbarSupportedContent">
 
@@ -20,7 +20,7 @@ export default {
                     </div>
 
                     <!-- right Side Of Navbar -->
-                    <div class="dropdown d-lg-none d-block mt-3">
+                    <div class="dropdown d-lg-none d-block mt-3 ms-2">
                         <button class=" border-0 bg-transparent text-white" type="button" data-bs-toggle="dropdown">
                             <i class="fa-regular fa-user fs-2 " style="color: #fff;"></i>
                         </button>
@@ -31,7 +31,7 @@ export default {
                                     class="hover-underline-animation dropdown-item text-dark">createAccount()</a></li>
                         </ul>
                     </div>
-                    <div class="d-none d-lg-flex justify-content-center align-items-center mt-3 mx-2">
+                    <div class="d-none d-lg-flex justify-content-center align-items-center mt-3 ms-4">
                         <a href="http://127.0.0.1:8000/login" class="me-3 hover-underline-animation">logIn()</a>
                         <a href="http://127.0.0.1:8000/register" class="hover-underline-animation">createAccount()</a>
 

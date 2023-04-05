@@ -19,7 +19,7 @@ export default {
             <img class="w-100" :src="res_type.image" :alt="res_type.name">
         </label>
         <label class="btn btn-custom d-flex align-items-center justify-content-center ciao border-0 p-0" :for="res_type.id">
-            <p class="m-0 text-uppercase" type="button">{{ res_type.name }}</p>
+            <p class="mb-0 text-uppercase" type="button">{{ res_type.name }}</p>
         </label>
     </div>
 </template>
@@ -31,8 +31,8 @@ input {
 }
 
 .border-custom {
-    width: 145px;
-    height: 145px;
+    width: calc(100% / 6);
+    height: 135px;
     border: solid 2px var(--l-blue);
     border-radius: 15px;
     overflow: hidden;
@@ -46,9 +46,10 @@ input {
 
 p {
     font-weight: 600;
-    font-size: 20px;
+    font-size: 18px;
     color: var(--d-blue);
     transition: all 0.1s;
+    margin-top: 1.3rem;
 }
 
 i {
