@@ -46,7 +46,7 @@ input {
 
 p {
     font-weight: 600;
-    font-size: 18px;
+    font-size: 17px;
     color: var(--d-blue);
     transition: all 0.1s;
     margin-top: 1.3rem;
