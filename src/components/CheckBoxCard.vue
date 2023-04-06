@@ -10,17 +10,24 @@ export default {
 </script>
 
 <template>
-    <div class="mx-5 d-flex justify-content-center flex-column align-items-center border-custom">
-        <input @click="$emit('check-value', res_type.name)" type="checkbox" class="btn-check" :id="res_type.id"
-            autocomplete="off">
-        <label
-            class="btn btn-custom d-flex align-items-center justify-content-center ciao border-0 p-0 w-100 overflow-y-hidden"
-            :for="res_type.id">
-            <img class="w-100" :src="res_type.image" :alt="res_type.name">
-        </label>
-        <label class="btn btn-custom d-flex align-items-center justify-content-center ciao border-0 p-0" :for="res_type.id">
-            <p class="mb-0 text-uppercase" type="button">{{ res_type.name }}</p>
-        </label>
+    <div class="d-flex align-items-center mb-3">
+
+
+        <div class="mx-3 d-flex justify-content-center flex-column align-items-center border-custom">
+            <input @click="$emit('check-value', res_type.name)" type="checkbox" class="btn-check" :id="res_type.id"
+                autocomplete="off">
+            <label
+                class="btn btn-custom d-flex align-items-center justify-content-center ciao border-0 p-0 w-100 overflow-y-hidden"
+                :for="res_type.id">
+                <img class="w-100" :src="res_type.image" :alt="res_type.name">
+            </label>
+            <label class="btn btn-custom d-flex align-items-center justify-content-center ciao border-0 p-0"
+                :for="res_type.id">
+                <p class="mb-0 text-uppercase" type="button">{{ res_type.name }}</p>
+            </label>
+        </div>
+
+
     </div>
 </template>
 
@@ -31,7 +38,7 @@ input {
 }
 
 .border-custom {
-    width: calc(100% / 6);
+    width: 110px;
     height: 135px;
     border: solid 2px var(--l-blue);
     border-radius: 15px;

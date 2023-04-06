@@ -49,7 +49,7 @@ export default {
     <TitleHeader />
     <SerchBar />
     <div class="container">
-        <form action="" class="d-flex justify-content-between align-items-center">
+        <form action="" class="d-flex justify-content-center align-items-center flex-wrap">
             <CheckBoxCard v-for="res_type in res_types" :key="id" :res_type="res_type" @check-value="checkedValue" />
         </form>
         <div class="row mt-5">
