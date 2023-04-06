@@ -6,7 +6,7 @@ export default {
 </script>
 
 <template>
-    <div class="col-4 my-3">
+    <div class="col-lg-4 col-md-6 col-sm-12 my-3">
         <div class="card">
             <img :src="restaurant.image" class="img-fluid img-res-custom" :alt="restaurant.name">
             <div class="card-body">
