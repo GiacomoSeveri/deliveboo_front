@@ -5,34 +5,43 @@ export default {
 </script>
 
 <template>
-    <div class="d-flex justify-content-center align-items-center py-3 bg-custom-img">
-        <h3 class="text-uppercase custom-text-title m-0">slider</h3>
+    <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="false">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="img/slider/pizza.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="img/slider/sushi.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="img/slider/carne.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="img/slider/burger.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="img/slider/dessert.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="img/slider/italiano.jpg" class="d-block w-100" alt="...">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControlsNoTouching"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControlsNoTouching"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
     </div>
 </template>
 
 <style lang="scss" scoped>
-.bg-custom-img {
-    background-image: url(img/sfondo.jpg);
-    // object-fit: contain;
-    background-position: center;
-    background-size: cover;
-    min-height: 350px;
-}
-
-.custom-text-title {
-    text-shadow: 1px 1px var(--bgc);
-}
-
-@media screen and (max-width: 768px) {
-    h3 {
-        font-size: 20px;
-        padding: 0 5px;
-    }
-}
-
-@media screen and (max-width: 576px) {
-    h3 {
-        font-size: 15px;
-    }
+img {
+    max-height: 600px;
+    object-fit: cover;
 }
 </style>
