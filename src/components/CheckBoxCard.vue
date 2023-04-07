@@ -40,7 +40,9 @@ input {
 .border-custom {
     width: 110px;
     height: 135px;
-    border: solid 2px var(--l-blue);
+    // border: solid 2px var(--l-blue);
+    box-shadow: 0 2px 5px 1px rgb(0 0 0 / 25%);
+
     border-radius: 15px;
     overflow: hidden;
 }

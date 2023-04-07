@@ -2,6 +2,7 @@
 import axios from 'axios';
 const apiUrlRestaurants = 'http://127.0.0.1:8000/api/restaurants';
 const apiUrlTypes = 'http://127.0.0.1:8000/api/types';
+const apiUrlDishs = 'http://127.0.0.1:8000/api/Dishes';
 
 import AppHeader from './components/AppHeader.vue';
 import TitleHeader from './components/TitleHeader.vue';
@@ -27,6 +28,9 @@ export default {
         },
         fetchRestaurants() {
             axios.get(apiUrlRestaurants).then(res => { this.restaurants = res.data })
+        },
+        fetchDishes() {
+            axios.get(apiUrlDishes).then(res => { this.Dishes = res.data })
         },
         checkedValue(value) {
             if (store.selected_types.includes(value)) {
