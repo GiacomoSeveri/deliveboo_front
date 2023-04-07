@@ -23,7 +23,7 @@ export default {
             </label>
             <label class="btn btn-custom d-flex align-items-center justify-content-center size border-0 p-0"
                 :for="res_type.id">
-                <p class="mb-0 text-uppercase" type="button">{{ res_type.name }}</p>
+                <p class="mb-0" type="button">{{ res_type.name }}</p>
             </label>
         </div>
 
@@ -41,7 +41,7 @@ input {
     width: 110px;
     height: 135px;
     // border: solid 2px var(--l-blue);
-    box-shadow: 0 2px 5px 1px rgb(0 0 0 / 25%);
+    box-shadow: 0 2px 5px 1px rgb(0 0 0 / 10%);
 
     border-radius: 15px;
     overflow: hidden;

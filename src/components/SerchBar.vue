@@ -16,6 +16,9 @@ export default {
 
 <style lang="scss" scoped>
 .c-searchInput {
+    box-shadow: 0 2px 5px 1px rgb(0 0 0 / 10%);
+    // box-shadow: 0 2px 5px 1px rgb(0 0 0 / 10%);
+    padding: 17px 55px 16px 50px;
     // position: relative;
     border-radius: 50rem;
     // font-family: JetSansDigital, Arial, sans-serif;

@@ -4,6 +4,7 @@ const apiUrlRestaurants = 'http://127.0.0.1:8000/api/restaurants';
 const apiUrlTypes = 'http://127.0.0.1:8000/api/types';
 const apiUrlDishs = 'http://127.0.0.1:8000/api/Dishes';
 
+import AppMotion from './components/AppMotion.vue';
 import AppHeader from './components/AppHeader.vue';
 import TitleHeader from './components/TitleHeader.vue';
 import SerchBar from './components/SerchBar.vue';
@@ -13,7 +14,7 @@ import AppRestaurant from './components/AppRestaurant.vue';
 import { store } from './data/store';
 export default {
     name: 'App',
-    components: { AppHeader, TitleHeader, SerchBar, CheckBoxCard, AppRestaurant },
+    components: { AppMotion, AppHeader, TitleHeader, SerchBar, CheckBoxCard, AppRestaurant },
     data() {
         return {
             res_types: [],
@@ -64,6 +65,7 @@ export default {
 </script>
 
 <template>
+    <AppMotion />
     <AppHeader />
     <TitleHeader />
     <SerchBar />
