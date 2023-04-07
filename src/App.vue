@@ -2,10 +2,10 @@
 import axios from 'axios';
 const apiUrlRestaurants = 'http://127.0.0.1:8000/api/restaurants';
 const apiUrlTypes = 'http://127.0.0.1:8000/api/types';
-const apiUrlDishs = 'http://127.0.0.1:8000/api/Dishes';
+const apiUrlDishes = 'http://127.0.0.1:8000/api/Dishes';
 
 import AppHeader from './components/AppHeader.vue';
-import TitleHeader from './components/TitleHeader.vue';
+import ImgCarousel from './components/ImgCarousel.vue';
 import SerchBar from './components/SerchBar.vue';
 import CheckBoxCard from './components/CheckBoxCard.vue';
 import AppRestaurant from './components/AppRestaurant.vue';
@@ -13,7 +13,7 @@ import AppRestaurant from './components/AppRestaurant.vue';
 import { store } from './data/store';
 export default {
     name: 'App',
-    components: { AppHeader, TitleHeader, SerchBar, CheckBoxCard, AppRestaurant },
+    components: { AppHeader, ImgCarousel, SerchBar, CheckBoxCard, AppRestaurant },
     data() {
         return {
             res_types: [],
@@ -65,7 +65,7 @@ export default {
 
 <template>
     <AppHeader />
-    <TitleHeader />
+    <ImgCarousel />
     <SerchBar />
     <div class="container">
         <form action="" class="d-flex justify-content-center align-items-center flex-wrap">

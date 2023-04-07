@@ -1,6 +1,6 @@
 <script>
 export default {
-    name: 'TitleHeader',
+    name: 'ImgCarousel',
 }
 </script>
 
