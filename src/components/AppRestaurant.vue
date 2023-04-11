@@ -2,7 +2,7 @@
 import { store } from '../data/store'
 export default {
     name: 'AppRestaurant',
-    props: { restaurant: Object },
+    props: { restaurant: Object, message: String },
     data() {
         return {
             store
@@ -82,7 +82,7 @@ export default {
 </script>
 
 <template>
-    <div class="col-lg-4 col-md-6 col-sm-12 my-3 questo" type="button" v-if="has_type(restaurant.types)">
+    <div class="col-lg-4 col-md-6 col-sm-12 my-3" v-if="has_type(restaurant.types)">
         <div class="card">
             <img :src="restaurant.image" class="img-fluid img-res-custom" :alt="restaurant.name">
             <div class="card-body">

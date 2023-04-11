@@ -1,18 +1,19 @@
 <script>
 export default {
     name: 'SerchBar',
+    data() { return { searchedText: '' } },
+    emits: ['text-change', 'search']
 }
 </script>
 
 <template>
-    <div class="container w-100">
-        <div class="w-100">
-            <div class="d-flex justify-content-center align-items-center my-5 fs-5 w-100">
-                <input id="dish-search" type="search" placeholder="Cerca per cucina o ristorante" autocomplete="off"
-                    class="c-searchInput">
-            </div>
+    <form class="container" @submit.prevent="$emit('search')">
+        <div class="width-bar position-relative my-5">
+            <input id="dish-search" v-model.trim='searchedText' @keyup="$emit('text-change', searchedText)" type="text"
+                placeholder="Cerca per nome ristorante" autocomplete="off" class="c-searchInput">
+            <i class="fa-solid fa-magnifying-glass position-glass" style="color: #4888a8;"></i>
         </div>
-    </div>
+    </form>
 </template>
 
 <style lang="scss" scoped>
@@ -20,11 +21,8 @@ export default {
     box-shadow: 0 2px 5px 1px rgb(0 0 0 / 10%);
     // box-shadow: 0 2px 5px 1px rgb(0 0 0 / 10%);
     padding: 17px 55px 16px 50px;
-}
-
-.c-searchInput {
     // position: relative;
-    border-radius: 50rem;
+    border-radius: 15px;
     // font-family: JetSansDigital, Arial, sans-serif;
     font-weight: 400;
     color: var(--d-blue);
@@ -35,8 +33,7 @@ export default {
     // -webkit-appearance: none;
     font-size: 16px;
     font-size: 1rem;
-    padding: 16px 30px 16px 30px;
-    width: 63%;
+    padding: 16px 60px;
 }
 
 input:focus-visible {
@@ -44,5 +41,22 @@ input:focus-visible {
     outline-color: var(--p-orange);
 
 
+}
+
+.position-relative {
+    position: relative;
+}
+
+.position-glass {
+    position: absolute;
+    bottom: 50%;
+    transform: translate(0px, 50%);
+    left: 2%;
+    font-size: 22px;
+}
+
+.width-bar {
+    width: 63%;
+    margin: 0 auto;
 }
 </style>

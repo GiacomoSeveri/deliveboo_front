@@ -17,13 +17,13 @@ export default {
             <input @click="$emit('check-value', res_type.name)" type="checkbox" class="btn-check" :id="res_type.id"
                 autocomplete="off">
             <label
-                class="btn btn-custom d-flex align-items-center justify-content-center ciao border-0 p-0 w-100 overflow-y-hidden"
+                class="btn btn-custom d-flex align-items-center justify-content-center size border-0 p-0 w-100 overflow-y-hidden"
                 :for="res_type.id">
                 <img class="w-100" :src="res_type.image" :alt="res_type.name">
             </label>
-            <label class="btn btn-custom d-flex align-items-center justify-content-center ciao border-0 p-0"
+            <label class="btn btn-custom d-flex align-items-center justify-content-center size border-0 p-0"
                 :for="res_type.id">
-                <p class="mb-0 text-uppercase" type="button">{{ res_type.name }}</p>
+                <p class="mb-0" type="button">{{ res_type.name }}</p>
             </label>
         </div>
 
@@ -41,13 +41,13 @@ input {
     width: 110px;
     height: 135px;
     // border: solid 2px var(--l-blue);
-    box-shadow: 0 2px 5px 1px rgb(0 0 0 / 25%);
+    box-shadow: 0 2px 5px 1px rgb(0 0 0 / 10%);
 
     border-radius: 15px;
     overflow: hidden;
 }
 
-.ciao {
+.size {
     width: 80px;
     height: 80px;
     font-size: 50px;

@@ -26,15 +26,14 @@ export default {
                         </button>
                         <ul class="dropdown-menu">
                             <li> <a href="http://127.0.0.1:8000/login"
-                                    class="me-3 hover-underline-animation dropdown-item text-dark">logIn()</a></li>
+                                    class="me-3 hover-underline-animation dropdown-item text-dark">logIn( )</a></li>
                             <li><a href="http://127.0.0.1:8000/register"
-                                    class="hover-underline-animation dropdown-item text-dark">createAccount()</a></li>
+                                    class="hover-underline-animation dropdown-item text-dark">createAccount( )</a></li>
                         </ul>
                     </div>
-                    <div class="d-none d-lg-flex justify-content-center align-items-center mt-3 ms-4">
-                        <a href="http://127.0.0.1:8000/login" class="me-3 hover-underline-animation">logIn()</a>
-                        <a href="http://127.0.0.1:8000/register" class="hover-underline-animation">createAccount()</a>
-
+                    <div class="d-none d-lg-flex justify-content-center align-items-center translate-down mt-3 ms-4">
+                        <a href="http://127.0.0.1:8000/login" class="me-3 hover-underline-animation">logIn( )</a>
+                        <a href="http://127.0.0.1:8000/register" class="hover-underline-animation">createAccount( )</a>
                     </div>
                 </div>
             </div>
@@ -46,6 +45,13 @@ export default {
 .bg-orange {
     background-color: var(--p-orange);
     min-height: 120px;
+    box-shadow: 0 2px 5px 1px rgba(0, 0, 0, 0.1);
+
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
 
     a {
         color: var(--white);
