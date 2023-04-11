@@ -13,29 +13,22 @@ export default {
     methods: {
 
         //funzione che viene eseguita quandon nello store viene cambiato l'array type_selected con nuovi campi
+
         has_type(lol) {
 
-
-
             //controllo se non sono selezionati  types e stampo tutti i ristoranti
+
             if (store.selected_types[0] == undefined) {
                 return true
             }
 
-            let variabile_fine_ciclo = false;
             let variabile_finale = false;
             let flag = true;
-            store.selected_types.forEach((element, index) => {
+            store.selected_types.forEach((element) => {
 
                 variabile_finale = false;
 
-                //
-                if (index != 0 && variabile_fine_ciclo) {
-                    variabile_fine_ciclo = false;
-                }
-
-
-                const numero = lol.length - 1;
+                const numero_lunghezza_input = lol.length - 1;
 
                 //ciclo sugli indici dei tipi del singolo ristorante
                 for (let i = 0; i < lol.length; i++) {
@@ -46,34 +39,20 @@ export default {
                         //faccio il controllo sul singolo elemento
                         if (lol[i]['name'] == element) {
                             variabile_finale = true;
-
                             flag = true
                         }
 
-                        if (i == numero) {
+                        //alla fine del ciclo se NON sono stati trovati gli elementi nell'if precedente cambio il flag in modo tale da non ripetere l'operazione sugli altri tipi
+                        if (i == numero_lunghezza_input && !variabile_finale) {
 
-                            if (!variabile_finale) {
-                                flag = false;
-                            }
+                            flag = false;
 
                         }
                     }
-
-
                 }
-
-
-
-
-
             })
 
-            if (variabile_finale) {
-                return true
-
-            } else {
-                return false
-            }
+            return variabile_finale
 
         }
     },
