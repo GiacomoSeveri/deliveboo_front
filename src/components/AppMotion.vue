@@ -137,12 +137,12 @@ export default {
 
     .mask-7 {
         background-color: var(--d-orange);
-        width: 1500px;
+        width: 100%;
         height: 386px;
 
         position: fixed;
         top: 594px;
-        left: 161px;
+        left: 0px;
 
         z-index: 13;
     }
@@ -412,7 +412,7 @@ export default {
     }
 
     100% {
-        transform: translate(-183%, 700%);
+        transform: translate(-183%, 850%);
     }
 }
 
