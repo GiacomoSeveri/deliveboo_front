@@ -6,6 +6,7 @@ const apiUrlDishs = 'http://127.0.0.1:8000/api/Dishes';
 
 import AppMotion from './components/AppMotion.vue';
 import AppHeader from './components/AppHeader.vue';
+import AppAlert from './components/AppAlert.vue';
 import TitleHeader from './components/TitleHeader.vue';
 import SerchBar from './components/SerchBar.vue';
 import CheckBoxCard from './components/CheckBoxCard.vue';
@@ -14,13 +15,13 @@ import AppRestaurant from './components/AppRestaurant.vue';
 import { store } from './data/store';
 export default {
     name: 'App',
-    components: { AppMotion, AppHeader, TitleHeader, SerchBar, CheckBoxCard, AppRestaurant },
+    components: { AppMotion, AppHeader, AppAlert, TitleHeader, SerchBar, CheckBoxCard, AppRestaurant },
     data() {
         return {
             res_types: [],
             restaurants: [],
-            filteredRestaurants: [],
             checked: [],
+            filteredRestaurants: [],
             nameFilter: '',
             store
         }
@@ -30,7 +31,10 @@ export default {
             axios.get(apiUrlTypes).then(res => { this.res_types = res.data })
         },
         fetchRestaurants() {
-            axios.get(apiUrlRestaurants).then(res => { this.restaurants = res.data })
+            axios.get(apiUrlRestaurants).then(res => {
+                this.restaurants = res.data;
+                this.filteredRestaurants = res.data;
+            })
         },
         fetchDishes() {
             axios.get(apiUrlDishes).then(res => { this.Dishes = res.data })
@@ -58,12 +62,21 @@ export default {
             this.nameFilter = text;
         },
         searchRestaurant() {
-            if (this.nameFilter.length) {
-                this.filteredRestaurants = this.restaurants.filter(restaurant => restaurant.name.toLowerCase().includes(this.nameFilter.toLowerCase()));
-            } else {
+            if (this.nameFilter === '') {
                 this.filteredRestaurants = this.restaurants;
+            } else {
+                this.filteredRestaurants = this.restaurants.filter(restaurant => restaurant.name.toLowerCase().includes(this.nameFilter.toLowerCase()));
             }
+
+
+
+            // if (this.nameFilter.length) {
+            //     this.filteredRestaurants = this.restaurants.filter(restaurant => restaurant.name.toLowerCase().includes(this.nameFilter.toLowerCase()));
+            // } else {
+            //     this.filteredRestaurants = this.restaurants;
+            // }
         },
+
 
     },
 
@@ -83,11 +96,9 @@ export default {
         <form action="" class="d-flex justify-content-center align-items-center flex-wrap">
             <CheckBoxCard v-for="res_type in res_types" :key="id" :res_type="res_type" @check-value="checkedValue" />
         </form>
-        <div class="row mt-5" v-if="!filteredRestaurants.length">
-            <AppRestaurant v-for="restaurant in restaurants" :key="id" :restaurant="restaurant" />
-        </div>
-        <div class="row mt-5" v-else>
-            <AppRestaurant v-for="restaurant in filteredRestaurants" :key="id" :restaurant="restaurant" :message="true" />
+        <div class="row mt-5">
+            <AppAlert v-if="!filteredRestaurants.length" />
+            <AppRestaurant v-for="restaurant in filteredRestaurants" :key="id" :restaurant="restaurant" />
         </div>
 
     </div>
