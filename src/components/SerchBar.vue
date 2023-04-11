@@ -1,17 +1,19 @@
 <script>
 export default {
     name: 'SerchBar',
+    data() { return { searchedText: '' } },
+    emits: ['text-change', 'search']
 }
 </script>
 
 <template>
-    <div class="container">
+    <form class="container" @submit.prevent="$emit('search')">
         <div class="width-bar position-relative my-5">
-            <input id="dish-search" type="search" placeholder="Cerca per cucina o ristorante" autocomplete="off"
-                class="c-searchInput">
+            <input id="dish-search" v-model.trim='searchedText' @keyup="$emit('text-change', searchedText)" type="text"
+                placeholder="Cerca per nome ristorante" autocomplete="off" class="c-searchInput">
             <i class="fa-solid fa-magnifying-glass position-glass" style="color: #4888a8;"></i>
         </div>
-    </div>
+    </form>
 </template>
 
 <style lang="scss" scoped>
@@ -20,7 +22,7 @@ export default {
     // box-shadow: 0 2px 5px 1px rgb(0 0 0 / 10%);
     padding: 17px 55px 16px 50px;
     // position: relative;
-    border-radius: 50rem;
+    border-radius: 15px;
     // font-family: JetSansDigital, Arial, sans-serif;
     font-weight: 400;
     color: var(--d-blue);

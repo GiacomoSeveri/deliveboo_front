@@ -2,7 +2,7 @@
 import { store } from '../data/store'
 export default {
     name: 'AppRestaurant',
-    props: { restaurant: Object },
+    props: { restaurant: Object, message: String },
     data() {
         return {
             store

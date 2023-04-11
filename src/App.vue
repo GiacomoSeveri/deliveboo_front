@@ -19,7 +19,9 @@ export default {
         return {
             res_types: [],
             restaurants: [],
+            filteredRestaurants: [],
             checked: [],
+            nameFilter: '',
             store
         }
     },
@@ -43,8 +45,6 @@ export default {
                         store.selected_types.splice(i, 1);
                         console.log(store.selected_types);
                         contain = true
-
-
                     }
                 });
                 if (contain) return
@@ -52,8 +52,18 @@ export default {
                 console.log(store.selected_types)
             }
             store.selected_types.push(value);
-            console.log('quetso =>', store.selected_types[store.selected_types.length - 1])
-        }
+            // console.log('quetso =>', store.selected_types[store.selected_types.length - 1])
+        },
+        onTextChange(text) {
+            this.nameFilter = text;
+        },
+        searchRestaurant() {
+            if (this.nameFilter.length) {
+                this.filteredRestaurants = this.restaurants.filter(restaurant => restaurant.name.toLowerCase().includes(this.nameFilter.toLowerCase()));
+            } else {
+                this.filteredRestaurants = this.restaurants;
+            }
+        },
 
     },
 
@@ -68,14 +78,18 @@ export default {
     <AppMotion />
     <AppHeader />
     <TitleHeader />
-    <SerchBar />
+    <SerchBar @text-change="onTextChange" @search="searchRestaurant" />
     <div class="container">
         <form action="" class="d-flex justify-content-center align-items-center flex-wrap">
             <CheckBoxCard v-for="res_type in res_types" :key="id" :res_type="res_type" @check-value="checkedValue" />
         </form>
-        <div class="row mt-5">
+        <div class="row mt-5" v-if="!filteredRestaurants.length">
             <AppRestaurant v-for="restaurant in restaurants" :key="id" :restaurant="restaurant" />
         </div>
+        <div class="row mt-5" v-else>
+            <AppRestaurant v-for="restaurant in filteredRestaurants" :key="id" :restaurant="restaurant" :message="true" />
+        </div>
+
     </div>
 </template>
 
