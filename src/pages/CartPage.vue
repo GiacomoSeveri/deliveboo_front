@@ -2,7 +2,15 @@
 export default {
     name: 'CartPage',
     data() {
-        return {}
+        return {
+            b: [
+                {
+                    name: 'pippo',
+                    amount: 2,
+                    price: '345£'
+                }
+            ]
+        }
     },
     methods: {
 
@@ -21,6 +29,7 @@ export default {
                         <th class="custom-p" scope="col">Piatto</th>
                         <th class="custom-p" scope="col">Quantità</th>
                         <th class="custom-p" scope="col">Prezzo</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -28,6 +37,7 @@ export default {
                         <td class="custom-p">{{ a.name }}</td>
                         <td class="custom-p">{{ a.amount }}</td>
                         <td class="custom-p">{{ a.price }}</td>
+                        <td class="text-end"><button class="btn btn-custom-secondary">Rimuovi dal carrello</button></td>
                     </tr>
                 </tbody>
             </table>

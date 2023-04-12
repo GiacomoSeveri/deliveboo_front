@@ -11,6 +11,9 @@ export default {
             restaurant: {},
             dishes: [],
             restaurant_dishes: [],
+            choosenDishes: [],
+            amounts: [],
+            // amount: 0
         }
     },
     methods: {
@@ -35,6 +38,16 @@ export default {
                 });
             })
         },
+        addMeal(text, price, amount) {
+            console.log(text, price, amount)
+        },
+    },
+    computed: {
+        createAmounts() {
+            this.restaurant_dishes.forEach((dish, i) => {
+                this.amounts.push(0)
+            });
+        }
     },
     created() {
         this.fetchRestaurant();
@@ -52,17 +65,21 @@ export default {
     <div class="container carte pb-2">
         <p>{{ restaurant.description }}</p>
         <div class="card border-0 p-3 my-4">
-            <div class="card p-3 my-2 d-flex" v-for="dish in restaurant_dishes">
-                <div>
-                    <p class="m-0 p-0">{{ dish["name"] }}</p>
-                    <p class="m-0 p-0 fs-5 text-custom-secondary">{{ dish["description"] }}</p>
-                </div>
-                <div class="d-flex justify-content-end">
-                    <p class="m-0 p-0">{{ dish["price"] }} €</p>
-                    <input type="number" min="0" placeholder="0" step="1" class="mx-2">
-                    <a href="" class="btn btn-custom-secondary d-flex align-items-center"><i
-                            class="fa-solid fa-cart-plus"></i></a>
-                </div>
+            <div class="card p-3 my-2 d-flex" v-for="(dish, i) in restaurant_dishes">
+                <form @submit.prevent="addMeal(dish['name'], dish['price'], amounts[i])">
+                    <div>
+                        <p class="m-0 p-0">{{ dish["name"] }}</p>
+                        <p class="m-0 p-0 fs-5 text-custom-secondary">{{ dish["description"] }}</p>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <p class="m-0 p-0">{{ dish["price"] }} €</p>
+                        <input name="amount" v-model="amounts[i]" type="number" min="0" placeholder="0" step="1"
+                            class="mx-2">
+                        <button type="submit" class="btn btn-custom-secondary d-flex align-items-center">
+                            <i class="fa-solid fa-cart-plus"></i>
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
