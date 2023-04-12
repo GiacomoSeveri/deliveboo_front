@@ -46,7 +46,7 @@ export default {
 
 <template>
     <img :src="restaurant.image" class="" :alt="restaurant.name">
-    <div class="container my-5 custom-pos">
+    <div class="container my-5 custom-pos text-center">
         <h1 class="">{{ restaurant.name }}</h1>
     </div>
     <div class="container carte pb-2">
@@ -73,20 +73,21 @@ img {
     width: 100%;
     max-height: 450px;
     object-fit: cover;
-    position: relative;
+    // position: relative;
 }
 
 .custom-pos {
-    position: absolute;
-    top: 428px;
-    left: 280px;
-    // margin: 0 auto;
-    font-size: 25px;
+    // height: 450px;
+    // position: absolute;
+    // bottom: 50%;
+    // left: 50%;
+    // transform: translateX(-50%);
+    // transform: translateY(-50%);
 
     h1 {
         font-size: 160px;
-        color: var(--white);
-        text-shadow: rgba($color: #000000, $alpha: 1) 1px 0 10px;
+        color: var(--d-blue);
+        // text-shadow: rgba($color: #000000, $alpha: 1) 1px 0 10px;
     }
 
 }
