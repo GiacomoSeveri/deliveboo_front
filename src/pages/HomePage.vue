@@ -88,6 +88,7 @@ export default {
 </script>
 
 <template>
+    <!-- <AppMotion /> -->
     <ImgCarousel />
     <SerchBar @search="searchRestaurant" @text-change="onTextChange" />
 
