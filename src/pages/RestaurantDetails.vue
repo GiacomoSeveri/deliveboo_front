@@ -48,10 +48,10 @@ export default {
     <img :src="restaurant.image" class="" :alt="restaurant.name">
     <div class="container my-5 custom-pos">
         <h1 class="">{{ restaurant.name }}</h1>
-        <p>{{ restaurant.description }}</p>
     </div>
     <div class="container carte pb-2">
-        <div class="card border-0 p-3 my-5">
+        <p>{{ restaurant.description }}</p>
+        <div class="card border-0 p-3 my-4">
             <div class="card p-3 my-2 d-flex" v-for="dish in restaurant_dishes">
                 <div>
                     <p class="m-0 p-0">{{ dish["name"] }}</p>
@@ -78,25 +78,27 @@ img {
 
 .custom-pos {
     position: absolute;
-    top: 150px;
+    top: 428px;
     left: 280px;
-    color: var(--white);
     // margin: 0 auto;
     font-size: 25px;
 
     h1 {
-        font-size: 65px;
+        font-size: 160px;
+        color: var(--white);
         text-shadow: rgba($color: #000000, $alpha: 1) 1px 0 10px;
     }
 
-    p {
-        text-shadow: rgba($color: #000000, $alpha: 1) 1px 0 10px;
+}
 
-    }
+p {
+    // text-shadow: rgba($color: #000000, $alpha: 1) 1px 0 10px;
+    // color: var(--black);
+    font-size: 20px;
 }
 
 .carte {
-    margin-top: 250px;
+    margin-top: 50px;
 }
 
 input {
