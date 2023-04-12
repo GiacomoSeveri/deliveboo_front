@@ -10,6 +10,7 @@ export default {
         return {
             restaurant: {},
             dishes: [],
+            restaurant_dishes: [],
         }
     },
     methods: {
@@ -25,9 +26,13 @@ export default {
             })
         },
         fetchDish() {
-            axios.get(apiUrlDish + this.$route.params.id).then(res => {
+            axios.get(apiUrlDish).then(res => {
                 this.dishes = res.data;
-                console.log(this.dishes);
+                this.dishes.forEach(dish => {
+                    if (this.$route.params.id == dish.restaurant_id) {
+                        this.restaurant_dishes.push(dish)
+                    }
+                });
             })
         },
     },
@@ -42,23 +47,21 @@ export default {
 <template>
     <img :src="restaurant.image" class="" :alt="restaurant.name">
     <div class="container my-5 custom-pos">
-        <h1 class="custom-text-title">{{ restaurant.name }}</h1>
+        <h1 class="">{{ restaurant.name }}</h1>
         <p>{{ restaurant.description }}</p>
-        <!-- <span>{{ res_type.name }}</span> -->
-        <!-- <h1>{{ dish[name] }}</h1> -->
-        <div class="container mt-5 pb-2">
-            <div class="card border-0 p-3 my-5" v-for="dish in dishes">
-                <div class="card p-3 my-2 d-flex">
-                    <div>
-                        <p class="m-0 p-0">{{ dish.name }}</p>
-                        <p class="m-0 p-0 fs-5 text-custom-secondary">descrizione</p>
-                    </div>
-                    <div class="d-flex justify-content-end">
-                        <p class="m-0 p-0">prezzo€</p>
-                        <input type="number" min="0" placeholder="0" step="1" class="mx-2">
-                        <a href="" class="btn btn-custom-secondary d-flex align-items-center"><i
-                                class="fa-solid fa-cart-plus"></i></a>
-                    </div>
+    </div>
+    <div class="container carte pb-2">
+        <div class="card border-0 p-3 my-5">
+            <div class="card p-3 my-2 d-flex" v-for="dish in restaurant_dishes">
+                <div>
+                    <p class="m-0 p-0">{{ dish["name"] }}</p>
+                    <p class="m-0 p-0 fs-5 text-custom-secondary">{{ dish["description"] }}</p>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <p class="m-0 p-0">{{ dish["price"] }} €</p>
+                    <input type="number" min="0" placeholder="0" step="1" class="mx-2">
+                    <a href="" class="btn btn-custom-secondary d-flex align-items-center"><i
+                            class="fa-solid fa-cart-plus"></i></a>
                 </div>
             </div>
         </div>
@@ -70,18 +73,30 @@ img {
     width: 100%;
     max-height: 450px;
     object-fit: cover;
-    position: absolute;
+    position: relative;
 }
 
 .custom-pos {
-    position: relative;
-    top: 318px;
+    position: absolute;
+    top: 150px;
+    left: 280px;
+    color: var(--white);
+    // margin: 0 auto;
     font-size: 25px;
 
     h1 {
         font-size: 65px;
-        text-shadow: 2px 2px var(--white);
+        text-shadow: rgba($color: #000000, $alpha: 1) 1px 0 10px;
     }
+
+    p {
+        text-shadow: rgba($color: #000000, $alpha: 1) 1px 0 10px;
+
+    }
+}
+
+.carte {
+    margin-top: 250px;
 }
 
 input {
