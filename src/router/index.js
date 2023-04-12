@@ -4,6 +4,7 @@ import HomePage from '../pages/HomePage.vue';
 // import ContactPage from '../pages/ContactPage.vue';
 import RestaurantDetails from '../pages/RestaurantDetails.vue';
 // import NotFoundPage from '../pages/NotFoundPage.vue';
+import CartPage from '../pages/CartPage.vue';
 
 const router = createRouter({
     linkExactActiveClass: 'active',
@@ -13,6 +14,11 @@ const router = createRouter({
         // { path: '/contact', name: 'contact', component: ContactPage },
         { path: '/Restaurants/:id', name: 'Restaurant-details', component: RestaurantDetails },
         // { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFoundPage }
+        {
+            path: "/carrello",
+            name: "CartPage",
+            component: CartPage,
+        }
     ]
 });
 
