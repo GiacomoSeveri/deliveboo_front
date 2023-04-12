@@ -85,7 +85,7 @@ img {
     // transform: translateY(-50%);
 
     h1 {
-        font-size: 160px;
+        font-size: 100px;
         color: var(--d-blue);
         // text-shadow: rgba($color: #000000, $alpha: 1) 1px 0 10px;
     }
