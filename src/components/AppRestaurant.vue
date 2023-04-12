@@ -62,16 +62,20 @@ export default {
 
 <template>
     <div class="col-lg-4 col-md-6 col-sm-12 my-3" v-if="has_type(restaurant.types)">
-        <div class="card">
-            <img :src="restaurant.image" class="img-fluid img-res-custom" :alt="restaurant.name">
-            <div class="card-body">
-                <h3 class="card-title custom-text-title">{{ restaurant.name }}</h3>
-                <p class="card-text p-card">{{ restaurant.description }}</p>
-                <!-- <ul class="list-group list-group-flush"> -->
-                <span v-for="res_type in restaurant.types" class="me-3 text-custom-secondary">{{ res_type.name }}</span>
-                <!-- </ul> -->
+        <router-link :to="{ name: 'Restaurant-details', params: { id: restaurant.id } }"
+            class="text-decoration-none text-dark">
+
+            <div class="card">
+                <img :src="restaurant.image" class="img-fluid img-res-custom" :alt="restaurant.name">
+                <div class="card-body">
+                    <h3 class="card-title custom-text-title">{{ restaurant.name }}</h3>
+                    <p class="card-text p-card">{{ restaurant.description }}</p>
+                    <!-- <ul class="list-group list-group-flush"> -->
+                    <span v-for="res_type in restaurant.types" class="me-3 text-custom-secondary">{{ res_type.name }}</span>
+                    <!-- </ul> -->
+                </div>
             </div>
-        </div>
+        </router-link>
     </div>
 </template>
 

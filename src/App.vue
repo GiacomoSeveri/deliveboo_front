@@ -88,21 +88,10 @@ export default {
 </script>
 
 <template>
-    <AppMotion />
+    <!-- <AppMotion /> -->
     <AppHeader />
-    <ImgCarousel />
-    <SerchBar @search="searchRestaurant" @text-change="onTextChange" />
-    <div class="container">
-        <form action="" class="d-flex justify-content-center align-items-center flex-wrap">
-            <CheckBoxCard v-for="res_type in res_types" :key="id" :res_type="res_type" @check-value="checkedValue" />
-        </form>
-        <div class="row mt-5">
-            <AppAlert v-if="!filteredRestaurants.length" />
-            <AppRestaurant v-for="restaurant in filteredRestaurants" :key="id" :restaurant="restaurant" />
-        </div>
-
-    </div>
-</template>
+    <RouterView />
+</template> 
 
 <style lang="scss">
 @use './assets/scss/style.scss';
