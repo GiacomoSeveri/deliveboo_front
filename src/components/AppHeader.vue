@@ -11,7 +11,7 @@ export default {
     methods: {
         counting_order() {
             this.count_dishes = JSON.parse(localStorage.getItem('orders'))
-            console.log('vogio questo=>', this.count_dishes)
+            // console.log('vogio questo=>', this.count_dishes)
 
             if (!this.count_dishes) {
                 return ''
@@ -35,7 +35,8 @@ export default {
                     <div class="navMenu d-flex align-items-center">
                         <router-link :to="{ name: 'home' }" class="text-decoration-none text-dark">
                             <a class="mx-3 logo d-flex align-items-center" href="{{ route('dashboard') }}">
-                                <img src="img/logo-400x400.png" alt="logo deliveboo" class="d-flex align-items-center">
+                                <img src="http://localhost:5174/img/logo-400x400.png" alt="logo deliveboo"
+                                    class="d-flex align-items-center">
                                 <h2 class="m-0 ms-2 p-0 fw-bold d-md-block d-none">DeliveBoo</h2>
                             </a>
                         </router-link>

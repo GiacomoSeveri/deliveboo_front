@@ -1,10 +1,20 @@
 <script>
 import axios from 'axios';
+import { store } from '../data/store';
 export default {
     name: 'CheckBoxCard',
+    data() {
+        return {
+            store,
+        }
+    },
     props: { res_type: Object },
     methods: {
-
+        isChecked() {
+            for (let i = 0; i < store.selected_types.length; i++) {
+                selected_types[i] === true;
+            }
+        }
     }
 }
 </script>
@@ -14,8 +24,8 @@ export default {
 
 
         <div class="mx-3 d-flex justify-content-center flex-column align-items-center border-custom">
-            <input @click="$emit('check-value', res_type.name)" type="checkbox" class="btn-check" :id="res_type.id"
-                autocomplete="off">
+            <input @click="$emit('check-value', res_type.name)" v-model="isChecked" type="checkbox" class="btn-check"
+                :id="res_type.id" autocomplete="off">
             <label
                 class="btn btn-custom d-flex align-items-center justify-content-center size border-0 p-0 w-100 overflow-y-hidden"
                 :for="res_type.id">

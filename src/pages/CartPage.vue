@@ -16,6 +16,9 @@ export default {
             localStorage.removeItem('orders')
             localStorage.setItem('orders', JSON.stringify(this.allOrder))
 
+            if (localStorage.getItem('orders') === '[]') {
+                localStorage.removeItem('orders');
+            }
 
         },
         getMeals() {

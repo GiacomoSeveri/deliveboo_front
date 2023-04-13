@@ -50,7 +50,7 @@ export default {
             let storage_first_restaurant_id = 0
             //console.log('questo qui =>', storage_dishes)
             if (JSON.parse(localStorage.getItem('orders'))) {
-                console.log('enstrato')
+                console.log('entrato')
                 storage_dishes = JSON.parse(localStorage.getItem('orders'))
                 storage_first_restaurant_id = storage_dishes[0].restaurant_id
             }
@@ -80,9 +80,9 @@ export default {
                     });
                 } else {
                     const targetDish = targetId
-                    console.log('target id =>', targetId)
+                    // console.log('target id =>', targetId)
 
-                    console.log('sostituisco', targetDish)
+                    // console.log('sostituisco', targetDish)
                     for (let x = 0; x < store.cart.length; x++) {
                         if (store.cart[x].id == targetDish) {
                             store.cart.splice(x, 1);
