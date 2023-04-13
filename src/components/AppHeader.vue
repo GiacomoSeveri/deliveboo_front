@@ -4,8 +4,15 @@ export default {
     name: 'AppHeader',
     data() {
         return {
-            store
+            store,
+            //count_dishes: JSON.parse(localStorage.getItem('orders')).length,
         }
+    },
+    methods: {
+        //counting_order() {
+        //   const count_dishes = JSON.parse(localStorage.getItem('orders')).length
+        //    return count_dishes
+        //}
     }
 }
 </script>
@@ -38,7 +45,7 @@ export default {
                             <li><a href="http://127.0.0.1:8000/register"
                                     class="hover-underline-animation dropdown-item text-dark">createAccount()</a></li>
                             <li><router-link :to="{ name: 'CartPage' }"
-                                    class="hover-underline-animation dropdown-item text-dark">showCart({{ store.cart.length
+                                    class="hover-underline-animation dropdown-item text-dark">showCart({{ store.count_dishes
                                     }})</router-link>
                             </li>
                         </ul>
@@ -47,7 +54,7 @@ export default {
                         <a href="http://127.0.0.1:8000/login" class="me-3 hover-underline-animation">logIn()</a>
                         <a href="http://127.0.0.1:8000/register" class="me-3 hover-underline-animation">createAccount()</a>
                         <router-link :to="{ name: 'CartPage' }" class="hover-underline-animation dropdown-item">showCart({{
-                            store.cart.length }})</router-link>
+                            store.count_dishes }})</router-link>
                     </div>
                 </div>
             </div>

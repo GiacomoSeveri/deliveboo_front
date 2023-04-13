@@ -6,11 +6,16 @@ export default {
     data() {
         return {
             store,
+            allOrder: JSON.parse(localStorage.getItem('orders')),
         }
     },
     methods: {
         deleteFromCart(i) {
-            store.cart.splice(i, 1)
+            //this.allOrder.splice(i, 1);
+            //localStorage.removeItem('orders')
+            //localStorage.setItem('orders', this.allOrder)
+
+
         },
         getMeals() {
             localStorage.getItem('orders') ?
@@ -20,8 +25,8 @@ export default {
     computed: {
         totalPrice() {
             let totalPrice = 0
-            for (let i = 0; i < store.cart.length; i++) {
-                totalPrice += store.cart[i].price * store.cart[i].amount
+            for (let i = 0; i < this.allOrder.length; i++) {
+                totalPrice += this.allOrder[i].price * this.allOrder[i].amount
             }
             return totalPrice
         }
@@ -44,10 +49,10 @@ export default {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(order, i) in store.cart">
-                        <td class="custom-p">{{ order.name }}</td>
-                        <td class="custom-p">{{ order.amount }}</td>
-                        <td class="custom-p">€{{ order.price * order.amount }}</td>
+                    <tr v-for="(singleOrder, i) in allOrder">
+                        <td class="custom-p">{{ singleOrder.name }}</td>
+                        <td class="custom-p">{{ singleOrder.amount }}</td>
+                        <td class="custom-p">€{{ singleOrder.price * singleOrder.amount }}</td>
                         <td class="text-end custom-p">
                             <form @submit.prevent="deleteFromCart(i)">
                                 <button type="submit" class="btn btn-custom-secondary">Rimuovi dal carrello</button>
@@ -61,7 +66,7 @@ export default {
             </div>
             <div class="custom-p d-flex justify-content-between align-items-center">
                 <span>
-                    Prezzo Totale: {{ totalPrice }}
+                    Prezzo Totale: €{{ totalPrice }}
                 </span>
                 <form action="">
                     <button class="btn btn-custom-secondary">Conferma Ordine</button>

@@ -42,10 +42,25 @@ export default {
                 });
             })
         },
-        addMeal(text, price, amount, currentId) {
+        addMeal(text, price, amount, currentId, restaurant_id) {
             // const mealStorage = localStorage.setItem('orders', JSON.stringify(store.cart))
             let flag = false
             let targetId = 0
+            let storage_dishes = []
+            let storage_first_restaurant_id = 0
+            //console.log('questo qui =>', storage_dishes)
+            if (JSON.parse(localStorage.getItem('orders'))) {
+                console.log('enstrato')
+                storage_dishes = JSON.parse(localStorage.getItem('orders'))
+                storage_first_restaurant_id = storage_dishes[0].restaurant_id
+            }
+            //console.log('questo =>', storage_dishes[0].restaurant_id)
+
+            if (restaurant_id != storage_first_restaurant_id) {
+                localStorage.removeItem('orders')
+                store.cart = []
+            }
+
             if (amount > 0) {
                 for (let i = 0; i < store.cart.length; i++) {
                     if (store.cart[i].id == currentId) {
@@ -59,22 +74,35 @@ export default {
                         'name': text,
                         'price': price,
                         'amount': amount,
-                        'id': currentId
+                        'id': currentId,
+                        'restaurant_id': restaurant_id
+
                     });
                 } else {
                     const targetDish = targetId
+                    console.log('target id =>', targetId)
 
                     console.log('sostituisco', targetDish)
+                    for (let x = 0; x < store.cart.length; x++) {
+                        if (store.cart[x].id == targetDish) {
+                            store.cart.splice(x, 1);
+                        }
 
-                    if (targetDish) {
-                        store.cart.push(targetDish[0]);
                     }
+
+                    store.cart.push({
+                        'name': text,
+                        'price': price,
+                        'amount': amount,
+                        'id': currentId,
+                        'restaurant_id': restaurant_id
+                    })
                 }
 
                 localStorage.setItem('orders', JSON.stringify(store.cart));
-
-                console.log(store.cart)
-                console.log(localStorage.getItem('orders'))
+                store.count_dishes = store.count_dishes
+                //console.log(store.cart)
+                //console.log(localStorage.getItem('orders'))
             }
 
             // // localStorage.setItem(i, [
@@ -125,7 +153,7 @@ export default {
         <p>{{ restaurant.description }}</p>
         <div class="card border-0 p-3 my-4">
             <div class="card p-3 my-2 d-flex" v-for="(dish, i) in restaurant_dishes" :key="dish.id">
-                <form @submit.prevent="addMeal(dish['name'], dish['price'], amounts[i], dish['id'])">
+                <form @submit.prevent="addMeal(dish['name'], dish['price'], amounts[i], dish['id'], dish['restaurant_id'])">
                     <div>
                         <p class="m-0 p-0">{{ dish["name"] }}</p>
                         <p class="m-0 p-0 fs-5 text-custom-secondary">{{ dish["description"] }}</p>
