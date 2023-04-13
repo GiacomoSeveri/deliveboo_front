@@ -53,18 +53,18 @@ export default {
         <p>{{ restaurant.description }}</p>
         <div class="card border-0 p-3 my-4">
             <div class="card my-2 d-flex" v-for="dish in restaurant_dishes">
-                <div class="d-flex justify-content-between mb-3">
+                <div class="d-flex justify-content-between">
                     <div class="p-3">
-                        <h2 class="p-0">{{ dish["name"] }}</h2>
-                        <p class="m-0 p-0 fs-5 text-custom-secondary fw-semibold">{{ dish["description"] }}</p>
+                        <h2 class="p-0 custom-text-title">{{ dish["name"] }}</h2>
+                        <p class="mb-5 p-0 fs-5">{{ dish["description"] }}</p>
+                        <div class="d-flex justify-content-start align-items-center">
+                            <p class="m-0 mt-1 p-0 text-custom-secondary">{{ dish["price"] }}€</p>
+                            <input type="number" min="0" max="99" placeholder="0" step="1" class="mx-3 mt-1">
+                            <a href="" class="btn btn-custom-secondary d-flex align-items-center"><i
+                                    class="fa-solid fa-cart-plus fs-4"></i></a>
+                        </div>
                     </div>
-                    <img :src="dish.image" class="img-dish" :alt="dish.name">
-                </div>
-                <div class="d-flex justify-content-end align-items-center p-3">
-                    <p class="m-0 mt-1 p-0">{{ dish["price"] }} €</p>
-                    <input type="number" min="0" placeholder="0" step="1" class="mx-3 mt-1">
-                    <a href="" class="btn btn-custom-secondary d-flex align-items-center"><i
-                            class="fa-solid fa-cart-plus fs-4"></i></a>
+                    <img :src="dish.image" class="img-dish img-fluid" :alt="dish.name">
                 </div>
             </div>
         </div>
@@ -80,8 +80,8 @@ export default {
 }
 
 .img-dish {
-    max-width: 180px;
-    border-radius: 0 5px 0 0;
+    max-width: 210px;
+    border-radius: 0 5px 5px 0;
 }
 
 .custom-pos {
