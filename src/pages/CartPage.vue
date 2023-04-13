@@ -12,9 +12,9 @@ export default {
     },
     methods: {
         deleteFromCart(i) {
-            //this.allOrder.splice(i, 1);
-            //localStorage.removeItem('orders')
-            //localStorage.setItem('orders', this.allOrder)
+            this.allOrder.splice(i, 1);
+            localStorage.removeItem('orders')
+            localStorage.setItem('orders', JSON.stringify(this.allOrder))
 
 
         },
