@@ -1,11 +1,36 @@
 <script>
+import { store } from '../data/store';
+
 export default {
     name: 'CartPage',
     data() {
-        return {}
+        return {
+            store,
+            // funzionava prima allOrder: JSON.parse(localStorage.getItem('orders')),
+            allOrder: JSON.parse(localStorage.getItem('orders')) ? JSON.parse(localStorage.getItem('orders')) : []
+        }
     },
     methods: {
+        deleteFromCart(i) {
+            this.allOrder.splice(i, 1);
+            localStorage.removeItem('orders')
+            localStorage.setItem('orders', JSON.stringify(this.allOrder))
 
+
+        },
+        getMeals() {
+            localStorage.getItem('orders') ?
+                JSON.parse(localStorage.getItem('orders')) : [];
+        }
+    },
+    computed: {
+        totalPrice() {
+            let totalPrice = 0
+            for (let i = 0; i < this.allOrder.length; i++) {
+                totalPrice += this.allOrder[i].price * this.allOrder[i].amount
+            }
+            return totalPrice
+        }
     }
 }
 </script>
@@ -14,29 +39,35 @@ export default {
     <div class="container mt-5">
         <h1>Il tuo carrello</h1>
         <div class="card mt-4">
-            <h4 class="custom-p m-0">I tuoi ordini da Nome ristorante</h4>
+            <h4 class="custom-p m-0">I tuoi ordini</h4>
             <table class="table table-hover m-0">
                 <thead>
                     <tr>
                         <th class="custom-p" scope="col">Piatto</th>
                         <th class="custom-p" scope="col">Quantità</th>
                         <th class="custom-p" scope="col">Prezzo</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="a in b">
-                        <td class="custom-p">{{ a.name }}</td>
-                        <td class="custom-p">{{ a.amount }}</td>
-                        <td class="custom-p">{{ a.price }}</td>
+                    <tr v-for="(singleOrder, i) in allOrder">
+                        <td class="custom-p">{{ singleOrder.name }}</td>
+                        <td class="custom-p">{{ singleOrder.amount }}</td>
+                        <td class="custom-p">€{{ singleOrder.price * singleOrder.amount }}</td>
+                        <td class="text-end custom-p">
+                            <form @submit.prevent="deleteFromCart(i)">
+                                <button type="submit" class="btn btn-custom-secondary">Rimuovi dal carrello</button>
+                            </form>
+                        </td>
                     </tr>
                 </tbody>
             </table>
-            <div class="custom-p">
+            <div class="custom-p" v-if="!store.cart">
                 Non hai ancora effettuato ordini
             </div>
             <div class="custom-p d-flex justify-content-between align-items-center">
                 <span>
-                    Prezzo Totale: prezzo totale
+                    Prezzo Totale: €{{ totalPrice }}
                 </span>
                 <form action="">
                     <button class="btn btn-custom-secondary">Conferma Ordine</button>

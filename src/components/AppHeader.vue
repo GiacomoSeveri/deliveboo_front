@@ -1,6 +1,26 @@
 <script>
+import { store } from '../data/store';
 export default {
     name: 'AppHeader',
+    data() {
+        return {
+            store,
+            count_dishes: [],
+        }
+    },
+    methods: {
+        counting_order() {
+            this.count_dishes = JSON.parse(localStorage.getItem('orders'))
+            console.log('vogio questo=>', this.count_dishes)
+
+            if (!this.count_dishes) {
+                return ''
+            } else {
+                this.count_dishes = JSON.parse(localStorage.getItem('orders')).length
+                return this.count_dishes
+            }
+        }
+    }
 }
 </script>
 
@@ -32,15 +52,16 @@ export default {
                             <li><a href="http://127.0.0.1:8000/register"
                                     class="hover-underline-animation dropdown-item text-dark">createAccount()</a></li>
                             <li><router-link :to="{ name: 'CartPage' }"
-                                    class="hover-underline-animation dropdown-item text-dark">showCart()</router-link>
+                                    class="hover-underline-animation dropdown-item text-dark">showCart({{ counting_order()
+                                    }})</router-link>
                             </li>
                         </ul>
                     </div>
                     <div class="d-none d-lg-flex justify-content-center align-items-center translate-down mt-3 ms-4">
                         <a href="http://127.0.0.1:8000/login" class="me-3 hover-underline-animation">logIn()</a>
                         <a href="http://127.0.0.1:8000/register" class="me-3 hover-underline-animation">createAccount()</a>
-                        <router-link :to="{ name: 'CartPage' }"
-                            class="hover-underline-animation dropdown-item">showCart()</router-link>
+                        <router-link :to="{ name: 'CartPage' }" class="hover-underline-animation dropdown-item">showCart({{
+                            counting_order() }})</router-link>
                     </div>
                 </div>
             </div>
