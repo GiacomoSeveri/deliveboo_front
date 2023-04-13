@@ -42,40 +42,39 @@ export default {
                 });
             })
         },
-        addMeal(text, price, amount, id, i) {
+        addMeal(text, price, amount, currentId) {
             // const mealStorage = localStorage.setItem('orders', JSON.stringify(store.cart))
-
+            let flag = false
+            let targetId = 0
             if (amount > 0) {
-                if (!localStorage.getItem(i)) {
+                for (let i = 0; i < store.cart.length; i++) {
+                    if (store.cart[i].id == currentId) {
+                        flag = true
+                        targetId = store.cart[i].id
+                    }
+                }
+                if (!flag) {
+                    console.log('pusho')
                     store.cart.push({
                         'name': text,
                         'price': price,
                         'amount': amount,
-                        'id': id
+                        'id': currentId
                     });
                 } else {
-                    store.cart.splice(i, 1);
-                    store.cart.push({
-                        'name': text,
-                        'price': price,
-                        'amount': amount,
-                        'id': id
-                    });
+                    const targetDish = targetId
+
+                    console.log('sostituisco', targetDish)
+
+                    if (targetDish) {
+                        store.cart.push(targetDish[0]);
+                    }
                 }
 
-                if (i >= localStorage.getItem('maxI')) {
-                    localStorage.setItem('maxI', i)
-                }
+                localStorage.setItem('orders', JSON.stringify(store.cart));
 
-                localStorage.setItem(i, JSON.stringify(store.cart[this.indecs]));
-
-                this.indecs += 1;
-
-                // const jsonObject = JSON.parse(localStorage.getItem(id))
-
-                // this.meals.push(jsonObject)
-
-                console.log(localStorage.getItem('maxI'))
+                console.log(store.cart)
+                console.log(localStorage.getItem('orders'))
             }
 
             // // localStorage.setItem(i, [
@@ -126,7 +125,7 @@ export default {
         <p>{{ restaurant.description }}</p>
         <div class="card border-0 p-3 my-4">
             <div class="card p-3 my-2 d-flex" v-for="(dish, i) in restaurant_dishes" :key="dish.id">
-                <form @submit.prevent="addMeal(dish['name'], dish['price'], amounts[i], dish['id'], i)">
+                <form @submit.prevent="addMeal(dish['name'], dish['price'], amounts[i], dish['id'])">
                     <div>
                         <p class="m-0 p-0">{{ dish["name"] }}</p>
                         <p class="m-0 p-0 fs-5 text-custom-secondary">{{ dish["description"] }}</p>
