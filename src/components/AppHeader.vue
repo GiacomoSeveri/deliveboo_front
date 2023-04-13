@@ -1,6 +1,12 @@
 <script>
+import { store } from '../data/store';
 export default {
     name: 'AppHeader',
+    data() {
+        return {
+            store
+        }
+    }
 }
 </script>
 
@@ -32,15 +38,16 @@ export default {
                             <li><a href="http://127.0.0.1:8000/register"
                                     class="hover-underline-animation dropdown-item text-dark">createAccount()</a></li>
                             <li><router-link :to="{ name: 'CartPage' }"
-                                    class="hover-underline-animation dropdown-item text-dark">showCart()</router-link>
+                                    class="hover-underline-animation dropdown-item text-dark">showCart({{ store.cart.length
+                                    }})</router-link>
                             </li>
                         </ul>
                     </div>
                     <div class="d-none d-lg-flex justify-content-center align-items-center translate-down mt-3 ms-4">
                         <a href="http://127.0.0.1:8000/login" class="me-3 hover-underline-animation">logIn()</a>
                         <a href="http://127.0.0.1:8000/register" class="me-3 hover-underline-animation">createAccount()</a>
-                        <router-link :to="{ name: 'CartPage' }"
-                            class="hover-underline-animation dropdown-item">showCart()</router-link>
+                        <router-link :to="{ name: 'CartPage' }" class="hover-underline-animation dropdown-item">showCart({{
+                            store.cart.length }})</router-link>
                     </div>
                 </div>
             </div>

@@ -3,6 +3,8 @@ import axios from 'axios';
 const apiUrlRestaurant = 'http://127.0.0.1:8000/api/restaurants/';
 const apiUrlType = 'http://127.0.0.1:8000/api/types/';
 const apiUrlDish = 'http://127.0.0.1:8000/api/dishes/';
+import { store } from '../data/store';
+
 export default {
     name: 'RestaurantDetails',
     props: { res_type: Object },
@@ -13,7 +15,7 @@ export default {
             restaurant_dishes: [],
             choosenDishes: [],
             amounts: [],
-            // amount: 0
+            store
         }
     },
     methods: {
@@ -38,17 +40,33 @@ export default {
                 });
             })
         },
-        addMeal(text, price, amount) {
-            console.log(text, price, amount)
+        addMeal(text, price, amount, i) {
+            store.cart.push({
+                'name': text,
+                'price': price,
+                'amount': amount
+            })
+
+            localStorage.setItem('orders', JSON.stringify(store.cart[i]))
+
+            // localStorage.setItem(i, [
+            //     text,
+            //     price,
+            //     amount
+            // ])
+
+            // let esempio = 
+
+            console.log(localStorage.getItem(i))
         },
     },
-    computed: {
-        createAmounts() {
-            this.restaurant_dishes.forEach((dish, i) => {
-                this.amounts.push(0)
-            });
-        }
-    },
+    // computed: {
+    //     createAmounts() {
+    //         this.restaurant_dishes.forEach((dish, i) => {
+    //             this.amounts.push(0)
+    //         });
+    //     }
+    // },
     created() {
         this.fetchRestaurant();
         this.fetchDish()
@@ -66,7 +84,7 @@ export default {
         <p>{{ restaurant.description }}</p>
         <div class="card border-0 p-3 my-4">
             <div class="card p-3 my-2 d-flex" v-for="(dish, i) in restaurant_dishes">
-                <form @submit.prevent="addMeal(dish['name'], dish['price'], amounts[i])">
+                <form @submit.prevent="addMeal(dish['name'], dish['price'], amounts[i], i)">
                     <div>
                         <p class="m-0 p-0">{{ dish["name"] }}</p>
                         <p class="m-0 p-0 fs-5 text-custom-secondary">{{ dish["description"] }}</p>
