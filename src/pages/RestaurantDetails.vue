@@ -45,23 +45,26 @@ export default {
 </script>
 
 <template>
-    <img :src="restaurant.image" class="" :alt="restaurant.name">
+    <img :src="restaurant.image" class="img-res" :alt="restaurant.name">
     <div class="container my-5 custom-pos text-center">
         <h1 class="">{{ restaurant.name }}</h1>
     </div>
     <div class="container carte pb-2">
         <p>{{ restaurant.description }}</p>
         <div class="card border-0 p-3 my-4">
-            <div class="card p-3 my-2 d-flex" v-for="dish in restaurant_dishes">
-                <div>
-                    <p class="m-0 p-0">{{ dish["name"] }}</p>
-                    <p class="m-0 p-0 fs-5 text-custom-secondary">{{ dish["description"] }}</p>
+            <div class="card my-2 d-flex" v-for="dish in restaurant_dishes">
+                <div class="d-flex justify-content-between mb-3">
+                    <div class="p-3">
+                        <h2 class="p-0">{{ dish["name"] }}</h2>
+                        <p class="m-0 p-0 fs-5 text-custom-secondary fw-semibold">{{ dish["description"] }}</p>
+                    </div>
+                    <img :src="dish.image" class="img-dish" :alt="dish.name">
                 </div>
-                <div class="d-flex justify-content-end">
-                    <p class="m-0 p-0">{{ dish["price"] }} €</p>
-                    <input type="number" min="0" placeholder="0" step="1" class="mx-2">
+                <div class="d-flex justify-content-end align-items-center p-3">
+                    <p class="m-0 mt-1 p-0">{{ dish["price"] }} €</p>
+                    <input type="number" min="0" placeholder="0" step="1" class="mx-3 mt-1">
                     <a href="" class="btn btn-custom-secondary d-flex align-items-center"><i
-                            class="fa-solid fa-cart-plus"></i></a>
+                            class="fa-solid fa-cart-plus fs-4"></i></a>
                 </div>
             </div>
         </div>
@@ -69,11 +72,16 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-img {
+.img-res {
     width: 100%;
     max-height: 450px;
     object-fit: cover;
     // position: relative;
+}
+
+.img-dish {
+    max-width: 180px;
+    border-radius: 0 5px 0 0;
 }
 
 .custom-pos {
