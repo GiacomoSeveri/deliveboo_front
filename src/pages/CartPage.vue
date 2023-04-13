@@ -6,7 +6,8 @@ export default {
     data() {
         return {
             store,
-            allOrder: JSON.parse(localStorage.getItem('orders')),
+            // funzionava prima allOrder: JSON.parse(localStorage.getItem('orders')),
+            allOrder: JSON.parse(localStorage.getItem('orders')) ? JSON.parse(localStorage.getItem('orders')) : []
         }
     },
     methods: {
