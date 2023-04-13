@@ -11,6 +11,10 @@ export default {
     methods: {
         deleteFromCart(i) {
             store.cart.splice(i, 1)
+        },
+        getMeals() {
+            localStorage.getItem('orders') ?
+                JSON.parse(localStorage.getItem('orders')) : [];
         }
     },
     computed: {

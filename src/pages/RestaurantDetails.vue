@@ -1,5 +1,6 @@
 <script>
 import axios from 'axios';
+import { ref } from 'vue';
 const apiUrlRestaurant = 'http://127.0.0.1:8000/api/restaurants/';
 const apiUrlType = 'http://127.0.0.1:8000/api/types/';
 const apiUrlDish = 'http://127.0.0.1:8000/api/dishes/';
@@ -15,7 +16,8 @@ export default {
             restaurant_dishes: [],
             choosenDishes: [],
             amounts: [],
-            store
+            store,
+            indecs: 0
         }
     },
     methods: {
@@ -40,25 +42,64 @@ export default {
                 });
             })
         },
-        addMeal(text, price, amount, i) {
-            store.cart.push({
-                'name': text,
-                'price': price,
-                'amount': amount
-            })
+        addMeal(text, price, amount, id, i) {
+            // const mealStorage = localStorage.setItem('orders', JSON.stringify(store.cart))
 
-            localStorage.setItem('orders', JSON.stringify(store.cart[i]))
+            if (amount > 0) {
+                if (!localStorage.getItem(i)) {
+                    store.cart.push({
+                        'name': text,
+                        'price': price,
+                        'amount': amount,
+                        'id': id
+                    });
+                } else {
+                    store.cart.splice(i, 1);
+                    store.cart.push({
+                        'name': text,
+                        'price': price,
+                        'amount': amount,
+                        'id': id
+                    });
+                }
 
-            // localStorage.setItem(i, [
-            //     text,
-            //     price,
-            //     amount
-            // ])
+                if (i >= localStorage.getItem('maxI')) {
+                    localStorage.setItem('maxI', i)
+                }
 
-            // let esempio = 
+                localStorage.setItem(i, JSON.stringify(store.cart[this.indecs]));
 
-            console.log(localStorage.getItem(i))
+                this.indecs += 1;
+
+                // const jsonObject = JSON.parse(localStorage.getItem(id))
+
+                // this.meals.push(jsonObject)
+
+                console.log(localStorage.getItem('maxI'))
+            }
+
+            // // localStorage.setItem(i, [
+            // //     text,
+            // //     price,
+            // //     amount
+            // // ])
+
+            // // let esempio = 
+
+            // console.log(localStorage.getItem(i))
+            // console.log(store.cart)
         },
+        fillStore() {
+            for (let i = 0; i <= localStorage.getItem('maxI'); i++) {
+                const jsonObject = JSON.parse(localStorage.getItem(i))
+                if (jsonObject && store.cart.length <= localStorage.getItem('maxI')) {
+
+                    store.cart.push(jsonObject)
+                    // for (let i = 0; i <= localStorage.getItem('maxI'); i++) {
+                    // }
+                }
+            }
+        }
     },
     // computed: {
     //     createAmounts() {
@@ -71,6 +112,7 @@ export default {
         this.fetchRestaurant();
         this.fetchDish()
         // // this.fetchType();
+        this.fillStore()
     }
 }
 </script>
@@ -83,8 +125,8 @@ export default {
     <div class="container carte pb-2">
         <p>{{ restaurant.description }}</p>
         <div class="card border-0 p-3 my-4">
-            <div class="card p-3 my-2 d-flex" v-for="(dish, i) in restaurant_dishes">
-                <form @submit.prevent="addMeal(dish['name'], dish['price'], amounts[i], i)">
+            <div class="card p-3 my-2 d-flex" v-for="(dish, i) in restaurant_dishes" :key="dish.id">
+                <form @submit.prevent="addMeal(dish['name'], dish['price'], amounts[i], dish['id'], i)">
                     <div>
                         <p class="m-0 p-0">{{ dish["name"] }}</p>
                         <p class="m-0 p-0 fs-5 text-custom-secondary">{{ dish["description"] }}</p>
