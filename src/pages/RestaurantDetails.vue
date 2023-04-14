@@ -49,6 +49,7 @@ export default {
             let storage_dishes = []
             let storage_first_restaurant_id = 0
 
+            // !important +++++++++++++++++++++++++++++++++++++++++++
             //console.log('questo qui =>', storage_dishes)
             if (JSON.parse(localStorage.getItem('orders'))) {
                 console.log('entrato')
@@ -63,26 +64,73 @@ export default {
                 store.cart = []
                 console.log('2')
             }
+            // !important +++++++++++++++++++++++++++++++++++++++++++
 
 
-            if (!flag) {
-                console.log('pusho')
-                console.log('4')
-                store.cart.push({
-                    'name': text,
-                    'price': price,
-                    'amount': amount,
-                    'id': currentId,
-                    'restaurant_id': restaurant_id
-                });
 
+            if (amount > 0) {
+                for (let i = 0; i < store.cart.length; i++) {
+                    if (store.cart[i].id == currentId) {
+                        flag = true
+                        targetId = store.cart[i].id
+                        console.log('3')
+                    }
+                }
+
+
+                //! important +++++++++++++++++++++++++++++++++++++++++++
+                if (!flag) {
+                    console.log('pusho')
+                    console.log('4')
+                    store.cart.push({
+                        'name': text,
+                        'price': price,
+                        'amount': amount,
+                        'id': currentId,
+                        'restaurant_id': restaurant_id
+                    });
+                    // !important +++++++++++++++++++++++++++++++++++++++++++
+
+
+                } else {
+                    const targetDish = targetId
+                    console.log('5')
+                    // console.log('target id =>', targetId)
+
+                    // console.log('sostituisco', targetDish)
+                    for (let x = 0; x < store.cart.length; x++) {
+                        if (store.cart[x].id == targetDish) {
+                            store.cart.splice(x, 1);
+                        }
+
+                    }
+
+                    store.cart.push({
+                        'name': text,
+                        'price': price,
+                        'amount': amount,
+                        'id': currentId,
+                        'restaurant_id': restaurant_id
+                    })
+                }
 
                 localStorage.setItem('orders', JSON.stringify(store.cart));
                 store.count_dishes = store.count_dishes
-                console.log(store.cart)
+                console.log('6')
+                //console.log(store.cart)
                 //console.log(localStorage.getItem('orders'))
             }
 
+            // // localStorage.setItem(i, [
+            // //     text,
+            // //     price,
+            // //     amount
+            // // ])
+
+            // // let esempio = 
+
+            // console.log(localStorage.getItem(i))
+            // console.log(store.cart)
         },
         fillStore() {
             for (let i = 0; i <= localStorage.getItem('maxI'); i++) {

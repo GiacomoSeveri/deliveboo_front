@@ -5,19 +5,23 @@ export default {
     data() {
         return {
             store,
-            count_dishes: [],
+            //counter: [],
         }
     },
     methods: {
         counting_order() {
-            this.count_dishes = JSON.parse(localStorage.getItem('orders'))
+            /* old code
+            this.count_dishes = JSON.parse(localStorage.getItem('orders')) */
+
+            //console.log('counter =>' + this.counter)
+            //console.log('store counter =>' + store.count_dishes)
+
             // console.log('vogio questo=>', this.count_dishes)
 
-            if (!this.count_dishes) {
+            if (!this.store.cart) {
                 return ''
             } else {
-                this.count_dishes = JSON.parse(localStorage.getItem('orders')).length
-                return this.count_dishes
+                return this.counter = store.cart.length
             }
         }
     }
