@@ -15,6 +15,9 @@ export default {
             this.allOrder.splice(i, 1);
             localStorage.removeItem('orders')
             localStorage.setItem('orders', JSON.stringify(this.allOrder))
+            store.cart = [];
+            store.cart = (JSON.parse(localStorage.getItem('orders')));
+            console.log(store.cart);
 
             if (localStorage.getItem('orders') === '[]') {
                 localStorage.removeItem('orders');
@@ -22,8 +25,7 @@ export default {
 
         },
         getMeals() {
-            localStorage.getItem('orders') ?
-                JSON.parse(localStorage.getItem('orders')) : [];
+            localStorage.getItem('orders') ? JSON.parse(localStorage.getItem('orders')) : [];
         }
     },
     computed: {

@@ -48,73 +48,41 @@ export default {
             let targetId = 0
             let storage_dishes = []
             let storage_first_restaurant_id = 0
+
             //console.log('questo qui =>', storage_dishes)
             if (JSON.parse(localStorage.getItem('orders'))) {
                 console.log('entrato')
                 storage_dishes = JSON.parse(localStorage.getItem('orders'))
                 storage_first_restaurant_id = storage_dishes[0].restaurant_id
+                console.log('1')
             }
             //console.log('questo =>', storage_dishes[0].restaurant_id)
 
             if (restaurant_id != storage_first_restaurant_id) {
                 localStorage.removeItem('orders')
                 store.cart = []
+                console.log('2')
             }
 
-            if (amount > 0) {
-                for (let i = 0; i < store.cart.length; i++) {
-                    if (store.cart[i].id == currentId) {
-                        flag = true
-                        targetId = store.cart[i].id
-                    }
-                }
-                if (!flag) {
-                    console.log('pusho')
-                    store.cart.push({
-                        'name': text,
-                        'price': price,
-                        'amount': amount,
-                        'id': currentId,
-                        'restaurant_id': restaurant_id
 
-                    });
-                } else {
-                    const targetDish = targetId
-                    // console.log('target id =>', targetId)
+            if (!flag) {
+                console.log('pusho')
+                console.log('4')
+                store.cart.push({
+                    'name': text,
+                    'price': price,
+                    'amount': amount,
+                    'id': currentId,
+                    'restaurant_id': restaurant_id
+                });
 
-                    // console.log('sostituisco', targetDish)
-                    for (let x = 0; x < store.cart.length; x++) {
-                        if (store.cart[x].id == targetDish) {
-                            store.cart.splice(x, 1);
-                        }
-
-                    }
-
-                    store.cart.push({
-                        'name': text,
-                        'price': price,
-                        'amount': amount,
-                        'id': currentId,
-                        'restaurant_id': restaurant_id
-                    })
-                }
 
                 localStorage.setItem('orders', JSON.stringify(store.cart));
                 store.count_dishes = store.count_dishes
-                //console.log(store.cart)
+                console.log(store.cart)
                 //console.log(localStorage.getItem('orders'))
             }
 
-            // // localStorage.setItem(i, [
-            // //     text,
-            // //     price,
-            // //     amount
-            // // ])
-
-            // // let esempio = 
-
-            // console.log(localStorage.getItem(i))
-            // console.log(store.cart)
         },
         fillStore() {
             for (let i = 0; i <= localStorage.getItem('maxI'); i++) {
