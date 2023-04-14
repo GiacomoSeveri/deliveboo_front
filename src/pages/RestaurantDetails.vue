@@ -43,45 +43,33 @@ export default {
             })
         },
         addMeal(text, price, amount, currentId, restaurant_id) {
-            // const mealStorage = localStorage.setItem('orders', JSON.stringify(store.cart))
+
             let flag = false
             let targetId = 0
             let storage_dishes = []
             let storage_first_restaurant_id = 0
 
-            // !important +++++++++++++++++++++++++++++++++++++++++++
-            //console.log('questo qui =>', storage_dishes)
+
             if (JSON.parse(localStorage.getItem('orders'))) {
                 console.log('entrato')
                 storage_dishes = JSON.parse(localStorage.getItem('orders'))
                 storage_first_restaurant_id = storage_dishes[0].restaurant_id
-                console.log('1')
             }
-            //console.log('questo =>', storage_dishes[0].restaurant_id)
 
             if (restaurant_id != storage_first_restaurant_id) {
                 localStorage.removeItem('orders')
                 store.cart = []
-                console.log('2')
             }
-            // !important +++++++++++++++++++++++++++++++++++++++++++
-
-
 
             if (amount > 0) {
                 for (let i = 0; i < store.cart.length; i++) {
                     if (store.cart[i].id == currentId) {
                         flag = true
                         targetId = store.cart[i].id
-                        console.log('3')
                     }
                 }
-
-
-                //! important +++++++++++++++++++++++++++++++++++++++++++
                 if (!flag) {
                     console.log('pusho')
-                    console.log('4')
                     store.cart.push({
                         'name': text,
                         'price': price,
@@ -89,15 +77,9 @@ export default {
                         'id': currentId,
                         'restaurant_id': restaurant_id
                     });
-                    // !important +++++++++++++++++++++++++++++++++++++++++++
-
-
                 } else {
                     const targetDish = targetId
-                    console.log('5')
-                    // console.log('target id =>', targetId)
 
-                    // console.log('sostituisco', targetDish)
                     for (let x = 0; x < store.cart.length; x++) {
                         if (store.cart[x].id == targetDish) {
                             store.cart.splice(x, 1);
@@ -116,21 +98,8 @@ export default {
 
                 localStorage.setItem('orders', JSON.stringify(store.cart));
                 store.count_dishes = store.count_dishes
-                console.log('6')
-                //console.log(store.cart)
-                //console.log(localStorage.getItem('orders'))
             }
 
-            // // localStorage.setItem(i, [
-            // //     text,
-            // //     price,
-            // //     amount
-            // // ])
-
-            // // let esempio = 
-
-            // console.log(localStorage.getItem(i))
-            // console.log(store.cart)
         },
         fillStore() {
             for (let i = 0; i <= localStorage.getItem('maxI'); i++) {
@@ -179,7 +148,7 @@ export default {
                     </div>
                     <div class="d-flex justify-content-start align-items-center">
                         <p class="m-0 mt-1 p-0 text-custom-secondary">{{ dish["price"] }} €</p>
-                        <input name="amount" v-model="amounts[i]" type="number" min="0" placeholder="0" step="1"
+                        <input name="amount" v-model="amounts[i]" type="number" min="0" step="1" placeholder="0"
                             class="mx-3 mt-1">
                         <button type="submit" class="btn btn-custom-secondary d-flex align-items-center">
                             <i class="fa-solid fa-cart-plus"></i>
