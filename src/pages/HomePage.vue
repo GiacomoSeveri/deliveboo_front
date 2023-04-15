@@ -88,12 +88,8 @@ export default {
                 this.filteredRestaurants = this.restaurants;
                 console.log('1')
             } else {
-                this.filteredRestaurants = this.restaurants.filter(restaurant => {
-                    this.isThereRestaurant = true;
-                    const result = restaurant.name.toLowerCase().includes(this.nameFilter.toLowerCase());
-                    console.log('result:' + result)
-                    if (!result) { this.isThereRestaurant = false; }
-                });
+                this.filteredRestaurants = this.restaurants.filter(restaurant => restaurant.name.toLowerCase().includes(this.nameFilter.toLowerCase()));
+                this.filteredRestaurants.length ? this.isThereRestaurant = true : this.isThereRestaurant = false;
             }
 
 
