@@ -11,13 +11,13 @@ export default {
     props: { res_type: Object },
     data() {
         return {
+            message: 'Attenzione, stai aggiungendo al carrello un piatto di un ristorante diverso da quello presente nel carrello, così facendo cancellerai tutti i piatti finora inseriti ed inizierai un nuovo ordine. Sei sicuro di voler procedere?',
             restaurant: {},
             dishes: [],
             restaurant_dishes: [],
             choosenDishes: [],
             amounts: [],
             store,
-            indecs: 0
         }
     },
     methods: {
@@ -44,6 +44,12 @@ export default {
         },
         addMeal(text, price, amount, currentId, restaurant_id) {
 
+            /*
+            const objectDish = { 'currentId': currentId, 'amount': amount, 'restaurant_id': restaurant_id };
+            this.restaurant_dishes.push(objectDish);
+            console.log(this.restaurant_dishes);
+            */
+
             let flag = false
             let targetId = 0
             let storage_dishes = []
@@ -59,6 +65,9 @@ export default {
             if (restaurant_id != storage_first_restaurant_id) {
                 localStorage.removeItem('orders')
                 store.cart = []
+
+                //inserire una funzione che richiami una modale con il messaggio
+                console.log(this.message);
             }
 
             if (amount > 0) {
@@ -97,7 +106,7 @@ export default {
                 }
 
                 localStorage.setItem('orders', JSON.stringify(store.cart));
-                store.count_dishes = store.count_dishes
+                store.count_dishes = store.count_dishes;
             }
 
         },
@@ -124,7 +133,7 @@ export default {
         this.fetchRestaurant();
         this.fetchDish()
         // // this.fetchType();
-        this.fillStore()
+        this.fillStore();
     }
 }
 </script>
