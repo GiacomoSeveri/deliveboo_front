@@ -18,11 +18,7 @@ export default {
 
             // console.log('vogio questo=>', this.count_dishes)
 
-            if (!this.store.cart) {
-                return ''
-            } else {
-                return this.counter = store.cart.length
-            }
+            return store.cart.length ? store.cart.length : JSON.parse(localStorage.getItem('orders')).length
         }
     }
 }
