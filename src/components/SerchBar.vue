@@ -8,15 +8,34 @@ export default {
 
 <template>
     <form class="container" @submit.prevent="$emit('search')">
-        <div class="width-bar position-relative my-5">
-            <input id="dish-search" v-model.trim='searchedText' @keyup="$emit('text-change', searchedText)" type="text"
-                placeholder="Cerca per nome ristorante" autocomplete="off" class="c-searchInput">
+        <div class="width-bar position-relative input-group my-5">
+            <input class="c-searchInput form-control" id="dish-search" v-model.trim='searchedText'
+                @keyup="$emit('text-change', searchedText)" type="text" placeholder="Cerca per nome ristorante"
+                autocomplete="off">
             <i class="fa-solid fa-magnifying-glass position-glass" style="color: #4888a8;"></i>
+            <button class="btn btn-custom-secondary">Cerca</button>
         </div>
     </form>
 </template>
 
 <style lang="scss" scoped>
+i {
+    z-index: 5;
+}
+
+button.btn {
+    box-shadow: 0 2px 5px 1px rgb(0 0 0 / 10%);
+}
+
+button.btn:hover {
+    box-shadow: 0 0 0 2px rgba(255, 131, 48, 0.6);
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 2px rgba(255, 131, 48, 0.6);
+    z-index: 0;
+}
+
 .c-searchInput {
     box-shadow: 0 2px 5px 1px rgb(0 0 0 / 10%);
     // box-shadow: 0 2px 5px 1px rgb(0 0 0 / 10%);

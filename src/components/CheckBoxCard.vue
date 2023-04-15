@@ -20,10 +20,10 @@ export default {
 </script>
 
 <template>
-    <div class="d-flex align-items-center mb-3">
+    <div class=" d-flex align-items-center mb-3">
 
 
-        <div class="mx-3 d-flex justify-content-center flex-column align-items-center border-custom">
+        <div class="type mx-3 d-flex justify-content-center flex-column align-items-center border-custom">
             <input @click="$emit('check-value', res_type.name)" v-model="isChecked" type="checkbox" class="btn-check"
                 :id="res_type.id" autocomplete="off">
             <label
@@ -42,6 +42,12 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+.type:hover {
+    box-shadow: 0 2px 5px 2px rgba(153, 182, 196, 0.5);
+    transform: scale(1.05, 1.05);
+    transition: 0.1s ease
+}
+
 input {
     width: 10px;
     height: 10px;
