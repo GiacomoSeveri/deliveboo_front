@@ -80,13 +80,15 @@ export default {
 <style lang="scss" scoped>
 .cs-card {
     box-shadow: 0 2px 5px 1px rgba(0, 0, 0, 0.1);
-    border-radius: 15px;
-    overflow: hidden;
 }
 
-.card {
-    border-style: none;
+
+.cs-card:hover {
+    box-shadow: 0 2px 5px 3px rgba(153, 182, 196, 0.5);
+    transform: translateY(-2%);
+    transition: 0.1s ease;
 }
+
 
 .img-res-custom {
     height: 250px;
