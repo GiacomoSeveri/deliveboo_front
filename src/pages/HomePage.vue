@@ -26,6 +26,7 @@ export default {
             store,
             isLoading: false,
             hasError: false,
+            isThereRestaurant: true,
         }
     },
     methods: {
@@ -33,25 +34,33 @@ export default {
             this.isLoading = true;
             axios.get(apiUrlTypes)
                 .then(res => { this.res_types = res.data })
-                .catch(err => { this.hasError = true; })
-                .then(() => { this.isLoading = false; });
+                .catch(err => { this.hasError = true })
+                .then(() => { this.isLoading = false });
         },
         fetchRestaurants() {
-            axios.get(apiUrlRestaurants).then(res => {
-                this.restaurants = res.data;
-                this.filteredRestaurants = res.data;
-            })
+            this.isLoading = true;
+            axios.get(apiUrlRestaurants)
+                .then(res => {
+                    this.restaurants = res.data;
+                    this.filteredRestaurants = res.data;
+                })
+                .catch(err => { this.hasError = true })
+                .then(() => { this.isLoading = false });
         },
         fetchDishes() {
-            axios.get(apiUrlDishes).then(res => { this.Dishes = res.data })
+            axios.get(apiUrlDishes)
+                .then(res => { this.Dishes = res.data })
+                .catch(err => { this.hasError = true })
+                .then(() => { this.isLoading = false });
         },
         checkedValue(value) {
             if (store.selected_types.includes(value)) {
-
+                console.log('A')
                 let contain = false
                 store.selected_types.forEach((single_type, i) => {
                     //se il value è contenuto nello store selected_type lo tolgo
                     if (single_type == value) {
+                        console.log('B')
                         store.selected_types.splice(i, 1);
                         console.log(store.selected_types);
                         contain = true
@@ -60,8 +69,14 @@ export default {
                 if (contain) return
                 store.selected_types.push(value);
                 console.log(store.selected_types)
+                console.log('C')
             }
             store.selected_types.push(value);
+            console.log('D')
+            if (!this.restaurants.length) {
+                console.log(this.isThereRestaurant);
+                this.isThereRestaurant = false;
+            }
             // console.log('quetso =>', store.selected_types[store.selected_types.length - 1])
         },
         onTextChange(text) {
@@ -69,9 +84,16 @@ export default {
         },
         searchRestaurant() {
             if (this.nameFilter === '') {
+                this.isThereRestaurant = true;
                 this.filteredRestaurants = this.restaurants;
+                console.log('1')
             } else {
-                this.filteredRestaurants = this.restaurants.filter(restaurant => restaurant.name.toLowerCase().includes(this.nameFilter.toLowerCase()));
+                this.filteredRestaurants = this.restaurants.filter(restaurant => {
+                    this.isThereRestaurant = true;
+                    const result = restaurant.name.toLowerCase().includes(this.nameFilter.toLowerCase());
+                    console.log('result:' + result)
+                    if (!result) { this.isThereRestaurant = false; }
+                });
             }
 
 
@@ -102,20 +124,25 @@ export default {
     <!-- slider -->
     <ImgCarousel />
 
-    <!-- Alert Messages -->
-    <AppAlert :isLoading="isLoading" :hasError="hasError" :filteredRestaurants="filteredRestaurants" />
-
     <!-- Search bar -->
     <SerchBar @search="searchRestaurant" @text-change="onTextChange" />
 
     <!-- Types of restaurants -->
     <div class="container">
-        <form action="" class="d-flex justify-content-center align-items-center flex-wrap">
-            <CheckBoxCard v-for="res_type in res_types" :key="id" :res_type="res_type" @check-value="checkedValue" />
-        </form>
+        <div class="row">
 
-        <!-- Restaurants -->
-        <AppRestaurant v-for="restaurant in filteredRestaurants" :key="id" :restaurant="restaurant" />
+            <form action="" class="d-flex justify-content-center align-items-center flex-wrap">
+                <CheckBoxCard v-for="res_type in res_types" :key="id" :res_type="res_type" @check-value="checkedValue" />
+            </form>
+
+            <!-- Alert Messages -->
+            <AppAlert :isLoading="isLoading" :hasError="hasError" :hasSearch="hasSearch"
+                :isThereRestaurant="isThereRestaurant" />
+
+            <!-- Restaurants -->
+            <AppRestaurant v-for="restaurant in filteredRestaurants" :key="id" :restaurant="restaurant" />
+
+        </div>
     </div>
 </template> 
 
