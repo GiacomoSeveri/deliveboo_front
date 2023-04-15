@@ -23,12 +23,21 @@ export default {
             checked: [],
             filteredRestaurants: [],
             nameFilter: '',
-            store
+            store,
+            isLoading: false,
+            hasError: false,
+            errorMessage: '',
         }
     },
     methods: {
         fetchTypes() {
-            axios.get(apiUrlTypes).then(res => { this.res_types = res.data })
+            this.isLoading = true;
+            axios.get(apiUrlTypes).then(res => { this.res_types = res.data }).catch(err => {
+                this.hasError = true;
+                this.errorMessage = 'Mi dispiace, si è verificato un errore 😔'
+            }).then(() => {
+                this.isLoading = false;
+            });
         },
         fetchRestaurants() {
             axios.get(apiUrlRestaurants).then(res => {
@@ -89,18 +98,26 @@ export default {
 
 <template>
     <!-- <AppMotion /> -->
+    <AppLoader v-if="isLoading" />
     <ImgCarousel />
+
+    <!-- Alert Messages -->
+    <div class="container row justify-content-center mt-5">
+        <div class="alert alert-warning" v-if="hasError">{{ errorMessage }}</div>
+        <AppAlert v-if="!filteredRestaurants.length && !hasError" />
+    </div>
+
+    <!-- Search bar -->
     <SerchBar @search="searchRestaurant" @text-change="onTextChange" />
 
+    <!-- Types of restaurants -->
     <div class="container">
         <form action="" class="d-flex justify-content-center align-items-center flex-wrap">
             <CheckBoxCard v-for="res_type in res_types" :key="id" :res_type="res_type" @check-value="checkedValue" />
         </form>
-        <div class="row mt-5">
-            <AppAlert v-if="!filteredRestaurants.length" />
-            <AppRestaurant v-for="restaurant in filteredRestaurants" :key="id" :restaurant="restaurant" />
-        </div>
 
+        <!-- Restaurants -->
+        <AppRestaurant v-for="restaurant in filteredRestaurants" :key="id" :restaurant="restaurant" />
     </div>
 </template> 
 
