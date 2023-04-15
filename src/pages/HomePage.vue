@@ -26,18 +26,15 @@ export default {
             store,
             isLoading: false,
             hasError: false,
-            errorMessage: '',
         }
     },
     methods: {
         fetchTypes() {
             this.isLoading = true;
-            axios.get(apiUrlTypes).then(res => { this.res_types = res.data }).catch(err => {
-                this.hasError = true;
-                this.errorMessage = 'Mi dispiace, si è verificato un errore 😔'
-            }).then(() => {
-                this.isLoading = false;
-            });
+            axios.get(apiUrlTypes)
+                .then(res => { this.res_types = res.data })
+                .catch(err => { this.hasError = true; })
+                .then(() => { this.isLoading = false; });
         },
         fetchRestaurants() {
             axios.get(apiUrlRestaurants).then(res => {
@@ -98,14 +95,15 @@ export default {
 
 <template>
     <!-- <AppMotion /> -->
+
+    <!-- loader -->
     <AppLoader v-if="isLoading" />
+
+    <!-- slider -->
     <ImgCarousel />
 
     <!-- Alert Messages -->
-    <div class="container row justify-content-center mt-5">
-        <div class="alert alert-warning" v-if="hasError">{{ errorMessage }}</div>
-        <AppAlert v-if="!filteredRestaurants.length && !hasError" />
-    </div>
+    <AppAlert :isLoading="isLoading" :hasError="hasError" :filteredRestaurants="filteredRestaurants" />
 
     <!-- Search bar -->
     <SerchBar @search="searchRestaurant" @text-change="onTextChange" />
@@ -121,4 +119,9 @@ export default {
     </div>
 </template> 
 
-<style lang="scss"></style>
+<style lang="scss">
+.width-alert {
+    width: 63%;
+    margin: 0 auto;
+}
+</style>
