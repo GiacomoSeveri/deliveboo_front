@@ -44,16 +44,13 @@ export default {
 
                         //alla fine del ciclo se NON sono stati trovati gli elementi nell'if precedente cambio il flag in modo tale da non ripetere l'operazione sugli altri tipi
                         if (i == numero_lunghezza_input && !variabile_finale) {
-
                             flag = false;
-
                         }
                     }
                 }
             })
 
             return variabile_finale
-
         }
     },
 
@@ -65,7 +62,7 @@ export default {
         <router-link :to="{ name: 'Restaurant-details', params: { id: restaurant.id } }"
             class="text-decoration-none text-dark">
 
-            <div class="card">
+            <div class="card cs-card">
                 <img :src="restaurant.image" class="img-fluid img-res-custom" :alt="restaurant.name">
                 <div class="card-body">
                     <h3 class="card-title custom-text-title">{{ restaurant.name }}</h3>
@@ -75,11 +72,22 @@ export default {
                     <!-- </ul> -->
                 </div>
             </div>
+
         </router-link>
     </div>
 </template>
 
 <style lang="scss" scoped>
+.cs-card {
+    box-shadow: 0 2px 5px 1px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.card {
+    border-style: none;
+}
+
 .img-res-custom {
     height: 250px;
     object-fit: cover;

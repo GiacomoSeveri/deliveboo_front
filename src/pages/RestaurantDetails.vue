@@ -18,29 +18,43 @@ export default {
             choosenDishes: [],
             amounts: [],
             store,
+            isLoading: false,
+            hasError: false,
         }
     },
     methods: {
         fetchRestaurant() {
-            axios.get(apiUrlRestaurant + this.$route.params.id).then(res => {
-                this.restaurant = res.data;
-            })
+            this.isLoading = true;
+            axios.get(apiUrlRestaurant + this.$route.params.id)
+                .then(res => {
+                    this.restaurant = res.data;
+                })
+                .catch(() => { this.hasError = true })
+                .then(() => { this.isLoading = false })
         },
         fetchType() {
-            axios.get(apiUrlType + this.$route.params.id).then(res => {
-                this.res_type = res.data;
-                // console.log(res_type);
-            })
+            this.isLoading = true
+            axios.get(apiUrlType + this.$route.params.id)
+                .then(res => {
+                    this.res_type = res.data;
+                    // console.log(res_type);
+                })
+                .catch(() => { this.hasError = true })
+                .then(() => { this.isLoading = false })
         },
         fetchDish() {
-            axios.get(apiUrlDish).then(res => {
-                this.dishes = res.data;
-                this.dishes.forEach(dish => {
-                    if (this.$route.params.id == dish.restaurant_id) {
-                        this.restaurant_dishes.push(dish)
-                    }
-                });
-            })
+            this.isLoading = true
+            axios.get(apiUrlDish)
+                .then(res => {
+                    this.dishes = res.data;
+                    this.dishes.forEach(dish => {
+                        if (this.$route.params.id == dish.restaurant_id) {
+                            this.restaurant_dishes.push(dish)
+                        }
+                    });
+                })
+                .catch(() => { this.hasError = true })
+                .then(() => { this.isLoading = false })
         },
         addMeal(text, price, amount, currentId, restaurant_id) {
 

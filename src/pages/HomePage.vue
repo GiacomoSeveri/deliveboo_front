@@ -26,7 +26,6 @@ export default {
             store,
             isLoading: false,
             hasError: false,
-            isThereRestaurant: true,
         }
     },
     methods: {
@@ -45,7 +44,7 @@ export default {
                     this.filteredRestaurants = res.data;
                 })
                 .catch(err => { this.hasError = true })
-                .then(() => { this.isLoading = false });
+                .then(() => { this.isLoading = false; });
         },
         fetchDishes() {
             axios.get(apiUrlDishes)
@@ -73,10 +72,7 @@ export default {
             }
             store.selected_types.push(value);
             console.log('D')
-            if (!this.restaurants.length) {
-                console.log(this.isThereRestaurant);
-                this.isThereRestaurant = false;
-            }
+
             // console.log('quetso =>', store.selected_types[store.selected_types.length - 1])
         },
         onTextChange(text) {
@@ -84,12 +80,12 @@ export default {
         },
         searchRestaurant() {
             if (this.nameFilter === '') {
-                this.isThereRestaurant = true;
+                store.isThereRestaurant = true;
                 this.filteredRestaurants = this.restaurants;
                 console.log('1')
             } else {
                 this.filteredRestaurants = this.restaurants.filter(restaurant => restaurant.name.toLowerCase().includes(this.nameFilter.toLowerCase()));
-                this.filteredRestaurants.length ? this.isThereRestaurant = true : this.isThereRestaurant = false;
+                this.filteredRestaurants.length ? store.isThereRestaurant = true : store.isThereRestaurant = false;
             }
 
 
@@ -128,15 +124,16 @@ export default {
         <div class="row">
 
             <form action="" class="d-flex justify-content-center align-items-center flex-wrap">
-                <CheckBoxCard v-for="res_type in res_types" :key="id" :res_type="res_type" @check-value="checkedValue" />
+                <CheckBoxCard v-for="res_type in res_types" :res_type="res_type" @check-value="checkedValue" />
             </form>
 
             <!-- Alert Messages -->
-            <AppAlert :isLoading="isLoading" :hasError="hasError" :hasSearch="hasSearch"
-                :isThereRestaurant="isThereRestaurant" />
+            <AppAlert :isLoading="isLoading" :hasError="hasError" :isThereRestaurant="store.isThereRestaurant" />
 
             <!-- Restaurants -->
-            <AppRestaurant v-for="restaurant in filteredRestaurants" :key="id" :restaurant="restaurant" />
+            <div id="restaurants" class="row">
+                <AppRestaurant v-for="restaurant in filteredRestaurants" :restaurant="restaurant" />
+            </div>
 
         </div>
     </div>
