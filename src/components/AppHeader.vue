@@ -10,15 +10,11 @@ export default {
     },
     methods: {
         counting_order() {
-            /* old code
-            this.count_dishes = JSON.parse(localStorage.getItem('orders')) */
-
-            //console.log('counter =>' + this.counter)
-            //console.log('store counter =>' + store.count_dishes)
-
-            // console.log('vogio questo=>', this.count_dishes)
-
-            return store.cart.length ? store.cart.length : JSON.parse(localStorage.getItem('orders')).length
+            if (!localStorage.getItem('orders')) {
+                return store.cart.length
+            } else if (localStorage.getItem('orders')) {
+                return store.cart.length ? store.cart.length : JSON.parse(localStorage.getItem('orders')).length
+            }
         }
     }
 }
