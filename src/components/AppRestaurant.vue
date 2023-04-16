@@ -62,7 +62,7 @@ export default {
         <router-link :to="{ name: 'Restaurant-details', params: { id: restaurant.id } }"
             class="text-decoration-none text-dark">
 
-            <div class="card cs-card">
+            <div class="card cs-card p-relative">
                 <img :src="restaurant.image" class="img-fluid img-res-custom" :alt="restaurant.name">
                 <div class="card-body">
                     <h3 class="card-title custom-text-title">{{ restaurant.name }}</h3>
@@ -71,13 +71,31 @@ export default {
                     <span v-for="res_type in restaurant.types" class="me-3 text-custom-secondary">{{ res_type.name }}</span>
                     <!-- </ul> -->
                 </div>
+
+                <!-- label -->
+                <div v-if="store.current_restaurant_id === restaurant.id" class="label">
+                    <i class="fa-star fa-solid custom-bg-titolone"></i>
+                    <span><b> Ristorante Scelto</b></span>
+                </div>
+
             </div>
 
         </router-link>
+
     </div>
 </template>
 
 <style lang="scss" scoped>
+.label {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px 1px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+}
+
 .cs-card {
     box-shadow: 0 2px 5px 1px rgba(0, 0, 0, 0.1);
 }
