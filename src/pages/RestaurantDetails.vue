@@ -1,6 +1,6 @@
 <script>
 import axios from 'axios';
-import { ref } from 'vue';
+import { ref, shallowReactive } from 'vue';
 const apiUrlRestaurant = 'http://127.0.0.1:8000/api/restaurants/';
 const apiUrlType = 'http://127.0.0.1:8000/api/types/';
 const apiUrlDish = 'http://127.0.0.1:8000/api/dishes/';
@@ -20,6 +20,7 @@ export default {
             store,
             isLoading: false,
             hasError: false,
+            showModal: true,
         }
     },
     methods: {
@@ -80,9 +81,20 @@ export default {
                 localStorage.removeItem('orders')
                 store.cart = []
 
+                if (store.current_restaurant_id != this.restaurant['id']) {
+                    this.showModal = true;
+                }
+
                 //inserire una funzione che richiami una modale con il messaggio
-                console.log(this.message);
             }
+
+            /*
+            if (store.restaurantDetailsId !== undefined) {
+                if (restaurant_id !== store.restaurantDetailsId) {
+                    console.log(this.message);
+                }
+            }
+            */
 
             if (amount > 0) {
                 for (let i = 0; i < store.cart.length; i++) {
@@ -119,8 +131,20 @@ export default {
                     })
                 }
 
+                /*
+                console.log(store.restaurantDetailsId)
+                console.log(this.restaurant.id)
+                if (this.restaurant.id !== store.restaurantDetailsId) {
+                    console.log('hai cambiato rist')
+                }
+                */
+
+                store.current_restaurant_id = this.restaurant['id']
+
+                console.log(this.restaurant['id'])
                 localStorage.setItem('orders', JSON.stringify(store.cart));
-                store.count_dishes = store.count_dishes;
+
+                // store.count_dishes = store.count_dishes;
             }
 
         },
@@ -136,18 +160,12 @@ export default {
             }
         }
     },
-    // computed: {
-    //     createAmounts() {
-    //         this.restaurant_dishes.forEach((dish, i) => {
-    //             this.amounts.push(0)
-    //         });
-    //     }
-    // },
     created() {
         this.fetchRestaurant();
         this.fetchDish()
         // // this.fetchType();
         this.fillStore();
+        console.log('current id: ' + store.current_restaurant_id)
     }
 }
 </script>
@@ -156,12 +174,27 @@ export default {
     <!-- loader -->
     <AppLoader v-if="isLoading" />
 
+    <!-- modal -->
+    <div class="modale d-flex justify-content-center align-items-center">
+        <div class="box-modale">
+            <p><span class="text-danger">Attenzione!</span></p>
+            <p>Stai aggiungendo al carrello il piatto di un altro ristorante. Così facendo cancellerai tutti i piatti
+                finora inseriti.</p>
+            <p>Sei sicuro di voler procedere?</p>
+            <button class="btn btn-custom-secondary me-3" type="button">Procedi</button>
+            <button class="btn btn-custom-secondary" type="button">Annulla</button>
+        </div>
+    </div>
+
     <img :src="restaurant.image" class="img-res" :alt="restaurant.name">
+
     <div class="container my-5 custom-pos text-center">
         <h1 class="">{{ restaurant.name }}</h1>
     </div>
+
     <div class="container carte pb-2">
         <p>{{ restaurant.description }}</p>
+
         <div class="card p-3 my-2 d-flex" v-for="(dish, i) in restaurant_dishes" :key="dish.id">
             <form class="d-flex justify-content-between"
                 @submit.prevent="addMeal(dish['name'], dish['price'], amounts[i], dish['id'], dish['restaurant_id'])">
@@ -188,6 +221,27 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+.modale {
+    background-color: rgba($color: #000000, $alpha: 0.7);
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+
+    .box-modale {
+        background-color: white;
+        border-radius: 5px;
+        width: 50%;
+        padding: 25px;
+
+        .text-danger {
+            font-size: 2rem;
+        }
+    }
+}
+
 .img-res {
     width: 100%;
     max-height: 450px;

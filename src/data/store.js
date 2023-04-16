@@ -5,4 +5,5 @@ export const store = reactive({
     count_dishes: 0,
     isThereRestaurant: true,
     restaurantDetailsId: undefined,
+    current_restaurant_id: 0,
 })
