@@ -20,7 +20,8 @@ export default {
             store,
             isLoading: false,
             hasError: false,
-            showModal: true,
+            showModal: false,
+            canProceed: false,
         }
     },
     methods: {
@@ -59,92 +60,83 @@ export default {
         },
         addMeal(text, price, amount, currentId, restaurant_id) {
 
-            /*
-            const objectDish = { 'currentId': currentId, 'amount': amount, 'restaurant_id': restaurant_id };
-            this.restaurant_dishes.push(objectDish);
-            console.log(this.restaurant_dishes);
-            */
-
-            let flag = false
-            let targetId = 0
-            let storage_dishes = []
-            let storage_first_restaurant_id = 0
-
-
-            if (JSON.parse(localStorage.getItem('orders'))) {
-                console.log('entrato')
-                storage_dishes = JSON.parse(localStorage.getItem('orders'))
-                storage_first_restaurant_id = storage_dishes[0].restaurant_id
-            }
-
-            if (restaurant_id != storage_first_restaurant_id) {
-                localStorage.removeItem('orders')
-                store.cart = []
-
-                if (store.current_restaurant_id != this.restaurant['id']) {
+            if (store.current_restaurant_id) {
+                if (store.current_restaurant_id === 0) {
+                    console.log('A')
+                    this.showModal = false;
+                    this.canProceed = true;
+                }
+                else if (this.restaurant['id'] !== store.current_restaurant_id) {
+                    console.log('B')
                     this.showModal = true;
-                }
-
-                //inserire una funzione che richiami una modale con il messaggio
-            }
-
-            /*
-            if (store.restaurantDetailsId !== undefined) {
-                if (restaurant_id !== store.restaurantDetailsId) {
-                    console.log(this.message);
+                    return this.canProceed = false;
                 }
             }
-            */
 
-            if (amount > 0) {
-                for (let i = 0; i < store.cart.length; i++) {
-                    if (store.cart[i].id == currentId) {
-                        flag = true
-                        targetId = store.cart[i].id
+            if (this.canProceed = true) {
+
+                let flag = false
+                let targetId = 0
+                let storage_dishes = []
+                let storage_first_restaurant_id = 0
+
+
+                if (JSON.parse(localStorage.getItem('orders'))) {
+                    storage_dishes = JSON.parse(localStorage.getItem('orders'))
+                    storage_first_restaurant_id = storage_dishes[0].restaurant_id
+                }
+
+                if (restaurant_id != storage_first_restaurant_id) {
+                    localStorage.removeItem('orders')
+                    store.cart = []
+
+                    if (store.current_restaurant_id != this.restaurant['id'] && store.current_restaurant_id !== 0) {
+                        this.showModal = true;
                     }
-                }
-                if (!flag) {
-                    console.log('pusho')
-                    store.cart.push({
-                        'name': text,
-                        'price': price,
-                        'amount': amount,
-                        'id': currentId,
-                        'restaurant_id': restaurant_id
-                    });
-                } else {
-                    const targetDish = targetId
 
-                    for (let x = 0; x < store.cart.length; x++) {
-                        if (store.cart[x].id == targetDish) {
-                            store.cart.splice(x, 1);
+                }
+
+
+                if (amount > 0) {
+                    for (let i = 0; i < store.cart.length; i++) {
+                        if (store.cart[i].id == currentId) {
+                            flag = true
+                            targetId = store.cart[i].id
+                        }
+                    }
+                    if (!flag) {
+                        store.cart.push({
+                            'name': text,
+                            'price': price,
+                            'amount': amount,
+                            'id': currentId,
+                            'restaurant_id': restaurant_id
+                        });
+                    } else {
+                        const targetDish = targetId
+
+                        for (let x = 0; x < store.cart.length; x++) {
+                            if (store.cart[x].id == targetDish) {
+                                store.cart.splice(x, 1);
+                            }
+
                         }
 
+                        store.cart.push({
+                            'name': text,
+                            'price': price,
+                            'amount': amount,
+                            'id': currentId,
+                            'restaurant_id': restaurant_id
+                        })
                     }
 
-                    store.cart.push({
-                        'name': text,
-                        'price': price,
-                        'amount': amount,
-                        'id': currentId,
-                        'restaurant_id': restaurant_id
-                    })
+                    store.current_restaurant_id = this.restaurant['id']
+
+                    console.log('current restaurant id on page: ' + this.restaurant['id'])
+                    localStorage.setItem('orders', JSON.stringify(store.cart));
+
                 }
-
-                /*
-                console.log(store.restaurantDetailsId)
-                console.log(this.restaurant.id)
-                if (this.restaurant.id !== store.restaurantDetailsId) {
-                    console.log('hai cambiato rist')
-                }
-                */
-
-                store.current_restaurant_id = this.restaurant['id']
-
-                console.log(this.restaurant['id'])
-                localStorage.setItem('orders', JSON.stringify(store.cart));
-
-                // store.count_dishes = store.count_dishes;
             }
 
         },
@@ -154,18 +146,32 @@ export default {
                 if (jsonObject && store.cart.length <= localStorage.getItem('maxI')) {
 
                     store.cart.push(jsonObject)
-                    // for (let i = 0; i <= localStorage.getItem('maxI'); i++) {
-                    // }
                 }
             }
+        },
+        cancel() {
+            this.canProceed = false;
+            this.showModal = false;
+        },
+        changeDish() {
+            //resetting local storage and store.cart
+            localStorage.removeItem('orders')
+            store.cart = [];
+            console.log('store.cart: ' + store.cart)
+
+            // sync of store restaurant id and restaurant id of current page
+            store.current_restaurant_id = this.restaurant['id'];
+            this.canProceed = true;
+            this.showModal = false;
         }
+
     },
     created() {
         this.fetchRestaurant();
         this.fetchDish()
         // // this.fetchType();
         this.fillStore();
-        console.log('current id: ' + store.current_restaurant_id)
+        console.log('current id on store: ' + store.current_restaurant_id)
     }
 }
 </script>
@@ -175,14 +181,14 @@ export default {
     <AppLoader v-if="isLoading" />
 
     <!-- modal -->
-    <div class="modale d-flex justify-content-center align-items-center">
+    <div v-if="showModal" class="modale d-flex justify-content-center align-items-center">
         <div class="box-modale">
             <p><span class="text-danger">Attenzione!</span></p>
-            <p>Stai aggiungendo al carrello il piatto di un altro ristorante. Così facendo cancellerai tutti i piatti
-                finora inseriti.</p>
-            <p>Sei sicuro di voler procedere?</p>
-            <button class="btn btn-custom-secondary me-3" type="button">Procedi</button>
-            <button class="btn btn-custom-secondary" type="button">Annulla</button>
+            <p>Stai visitando un altro ristorante. Se intendi aggiungere questo piatto al carrello, verranno cancellate le
+                tue precedenti scelte.</p>
+            <p>Sei sicuro di voler svuotare il carrello?</p>
+            <button class="btn btn-custom-secondary me-3" type="button" @click="changeDish">Procedi</button>
+            <button class="btn btn-custom-secondary" type="button" @click="cancel">Annulla</button>
         </div>
     </div>
 
