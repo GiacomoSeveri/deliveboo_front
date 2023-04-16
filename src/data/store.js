@@ -4,4 +4,5 @@ export const store = reactive({
     cart: [],
     count_dishes: 0,
     isThereRestaurant: true,
+    restaurantDetailsId: JSON.parse(localStorage.getItem('orders'))[0].restaurant_id,
 })

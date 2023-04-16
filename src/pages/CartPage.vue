@@ -36,13 +36,22 @@ export default {
             }
             return totalPrice
         }
+    },
+    created() {
+        store.restaurantDetailsId = JSON.parse(localStorage.getItem('orders'))[0].restaurant_id
+        console.log(store.restaurantDetailsId);
     }
 }
 </script>
 
 <template>
     <div class="container mt-5">
-        <h1>Il tuo carrello</h1>
+        <div class="d-flex justify-content-between align-items-center">
+            <h1>Il tuo carrello</h1>
+            <router-link :to="{ path: '/Restaurants/' + store.restaurantDetailsId }" class="btn btn-custom-secondary">
+                Torna al ristorante
+            </router-link>
+        </div>
         <div class="card mt-4">
             <h4 class="custom-p m-0">I tuoi ordini</h4>
             <table class="table table-hover m-0">

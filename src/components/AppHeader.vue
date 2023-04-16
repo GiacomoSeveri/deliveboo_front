@@ -30,11 +30,11 @@ export default {
                     <!-- Left Side Of Navbar -->
                     <div class="navMenu d-flex align-items-center">
                         <router-link :to="{ name: 'home' }" class="text-decoration-none text-dark">
-                            <a class="mx-3 logo d-flex align-items-center" href="{{ route('dashboard') }}">
+                            <div class="mx-3 logo d-flex align-items-center">
                                 <img src="http://localhost:5174/img/logo-400x400.png" alt="logo deliveboo"
                                     class="d-flex align-items-center">
                                 <h2 class="m-0 ms-2 p-0 fw-bold d-md-block d-none">DeliveBoo</h2>
-                            </a>
+                            </div>
                         </router-link>
                     </div>
 
@@ -67,6 +67,10 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+h2 {
+    color: white
+}
+
 .bg-orange {
     background-color: var(--p-orange);
     min-height: 120px;
