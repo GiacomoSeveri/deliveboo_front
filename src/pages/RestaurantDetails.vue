@@ -153,6 +153,9 @@ export default {
 </script>
 
 <template>
+    <!-- loader -->
+    <AppLoader v-if="isLoading" />
+
     <img :src="restaurant.image" class="img-res" :alt="restaurant.name">
     <div class="container my-5 custom-pos text-center">
         <h1 class="">{{ restaurant.name }}</h1>
