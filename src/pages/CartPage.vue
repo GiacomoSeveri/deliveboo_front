@@ -38,7 +38,7 @@ export default {
         }
     },
     created() {
-        store.restaurantDetailsId = JSON.parse(localStorage.getItem('orders'))[0].restaurant_id
+        store.restaurantDetailsId = localStorage.getItem('orders') ? JSON.parse(localStorage.getItem('orders'))[0].restaurant_id : undefined;
         console.log(store.restaurantDetailsId);
     }
 }
@@ -48,9 +48,18 @@ export default {
     <div class="container mt-5">
         <div class="d-flex justify-content-between align-items-center">
             <h1>Il tuo carrello</h1>
-            <router-link :to="{ path: '/Restaurants/' + store.restaurantDetailsId }" class="btn btn-custom-secondary">
+
+            <!-- buttons to come back -->
+            <router-link v-if="store.restaurantDetailsId >= 1" :to="{ path: '/Restaurants/' + store.restaurantDetailsId }"
+                class="btn btn-custom-secondary">
                 Torna al ristorante
             </router-link>
+
+            <router-link v-if="store.restaurantDetailsId === undefined" :to="{ name: 'home' }"
+                class="btn btn-custom-secondary">
+                Torna alla home
+            </router-link>
+
         </div>
         <div class="card mt-4">
             <h4 class="custom-p m-0">I tuoi ordini</h4>
