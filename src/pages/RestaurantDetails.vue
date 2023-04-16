@@ -58,7 +58,7 @@ export default {
                 .catch(() => { this.hasError = true })
                 .then(() => { this.isLoading = false })
         },
-
+        /*
         setAmount() {
             this.amounts = [];
             store.counting_amounts = [];
@@ -77,6 +77,7 @@ export default {
                 }
             }
         },
+        */
         addMeal(text, price, amount, currentId, restaurant_id) {
 
             if (store.current_restaurant_id) {
@@ -190,7 +191,7 @@ export default {
         this.fetchDish()
         // // this.fetchType();
         this.fillStore();
-        this.setAmount();
+        //this.setAmount();
         console.log('current id on store: ' + store.current_restaurant_id)
     }
 }

@@ -21,6 +21,7 @@ export default {
 
             if (localStorage.getItem('orders') === '[]') {
                 localStorage.removeItem('orders');
+                store.current_restaurant_id = 0;
             }
 
         },
