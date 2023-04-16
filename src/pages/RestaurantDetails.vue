@@ -58,6 +58,25 @@ export default {
                 .catch(() => { this.hasError = true })
                 .then(() => { this.isLoading = false })
         },
+
+        setAmount() {
+            this.amounts = [];
+            store.counting_amounts = [];
+            if (localStorage.getItem('orders')) {
+                console.log('asd: ' + JSON.parse(localStorage.getItem('orders'))[0].restaurant_id)
+                console.log(this.restaurant)
+                if (JSON.parse(localStorage.getItem('orders'))[0].restaurant_id === store.restaurantDetailsId) {
+                    JSON.parse(localStorage.getItem('orders')).forEach(item => {
+                        item.amount
+                        store.counting_amounts.push(item.amount)
+                        console.log(item.amount)
+                    })
+
+                    this.amounts = store.counting_amounts
+                    return this.amounts
+                }
+            }
+        },
         addMeal(text, price, amount, currentId, restaurant_id) {
 
             if (store.current_restaurant_id) {
@@ -171,6 +190,7 @@ export default {
         this.fetchDish()
         // // this.fetchType();
         this.fillStore();
+        this.setAmount();
         console.log('current id on store: ' + store.current_restaurant_id)
     }
 }
@@ -213,8 +233,10 @@ export default {
                     </div>
                     <div class="d-flex justify-content-start align-items-center">
                         <p class="m-0 mt-1 p-0 text-custom-secondary">{{ dish["price"] }} €</p>
+
                         <input name="amount" v-model="amounts[i]" type="number" min="0" step="1" placeholder="0"
                             class="mx-3 mt-1">
+
                         <button type="submit" class="btn btn-custom-secondary d-flex align-items-center">
                             <i class="fa-solid fa-cart-plus"></i>
                         </button>

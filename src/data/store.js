@@ -6,4 +6,5 @@ export const store = reactive({
     isThereRestaurant: true,
     restaurantDetailsId: undefined,
     current_restaurant_id: 0,
+    counting_amounts: [],
 })
