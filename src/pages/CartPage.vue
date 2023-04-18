@@ -13,16 +13,12 @@ export default {
             store,
             // funzionava prima allOrder: JSON.parse(localStorage.getItem('orders')),
             allOrder: JSON.parse(localStorage.getItem('orders')) ? JSON.parse(localStorage.getItem('orders')) : [],
-            form: { delivery_address: '', customer_name: '', customer_surname: '', customer_phone_number: '', customer_email: '', total_price: '', is_paid: false },
+            form: { delivery_address: '', customer_name: '', customer_surname: '', customer_phone_number: '', customer_email: '', total_price: 0, is_paid: false },
+            isLoading: false,
+            hasErrors: false,
             errors: {},
             alertMessage: null,
-            // newCustomer:{
-            //     customer_name:'',
-            //     customer_surname:'',
-            //     customer_address:'',
-            //     customer_email: '',
-            //     customer_phone_number: ''
-            // }
+
         }
     },
     components: { AppAlert },
@@ -67,27 +63,27 @@ export default {
             this.errors = errors;
         },
         sendCustomerForm() {
-            this.validateCustomerForm();
-            console.log('ciao')
-            if (!this.hasErrors) {
-                // this.isLoading = true;
-                axios.post(endPointCustomerInfo, this.form)
-                    .then(() => {
-                        this.form = { customer_name: '', customer_surname: '', customer_address: '', customer_email: '', customer_phone_number: '' };
-                    })
-                    .catch(err => {
-                        if (err.response.status === 400) {
-                            const { errors } = err.response.data;
-                            const errorMessages = {};
-                            for (let key in errors) errorMessages[key] = errors[key][0];
-                            this.errors = errorMessages;
-                        } else {
-                            this.errors = { network: 'Si è verificato un errore' };
+            //this.validateCustomerForm();
+            //if (!this.hasErrors) {
+            this.isLoading = true;
+            axios.post(endPointCustomerInfo, this.form)
+                .then(() => {
+                    this.form = { delivery_address: '', customer_name: '', customer_surname: '', customer_phone_number: '', customer_email: '', total_price: 0, is_paid: false };
+                })
+                .catch(err => {
+                    this.hasErrors = true;
+                    if (err.response.status === 400) {
+                        const { errors } = err.response.data;
+                        const errorMessages = {};
+                        for (let key in errors) errorMessages[key] = errors[key][0];
+                        this.errors = errorMessages;
+                    } else {
+                        this.errors = { network: 'Si è verificato un errore' };
 
-                        }
-                    })
-                    .then(() => { })
-            }
+                    }
+                })
+                .then(() => { this.isLoading = false })
+            //}
         }
     },
     computed: {
@@ -96,6 +92,7 @@ export default {
             for (let i = 0; i < this.allOrder.length; i++) {
                 totalPrice += this.allOrder[i].price * this.allOrder[i].amount
             }
+            this.form.total_price = totalPrice;
             return totalPrice
         },
         hasErrors() {
@@ -110,6 +107,8 @@ export default {
 </script>
 
 <template>
+    <AppLoader v-if="isLoading" />
+
     <div class="container mt-5">
         <div class="d-flex justify-content-between align-items-center">
             <h1>Il tuo carrello</h1>
