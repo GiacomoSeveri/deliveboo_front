@@ -208,7 +208,7 @@ export default {
             <p>Stai visitando un altro ristorante. Se intendi aggiungere questo piatto al carrello, verranno cancellate le
                 tue precedenti scelte.</p>
             <p>Sei sicuro di voler svuotare il carrello?</p>
-            <button class="btn btn-custom-secondary me-3" type="button" @click="changeDish">Procedi</button>
+            <button class="btn btn-custom-secondary me-3" type="button" @click="changeDish">Svuota Carrello</button>
             <button class="btn btn-custom-secondary" type="button" @click="cancel">Annulla</button>
         </div>
     </div>
