@@ -2,9 +2,9 @@
 import { store } from '../data/store';
 import axios from 'axios';
 import AppAlert from '../components/AppAlert.vue';
-const endPointCustomerInfo = 'http://127.0.0.1:8000/api/orders';
+const endPointCustomerInfo = 'http://127.0.0.1:8000/api/orders/store';
 const endPointOrders = 'http://127.0.0.1:8000/api';
-const emptyForm = { customer_name: '', customer_surname: '', customer_address: '', customer_email: '', customer_phone_number: '' }
+//const emptyForm = { customer_name: '', customer_surname: '', customer_address: '', customer_email: '', customer_phone_number: '' }
 
 export default {
     name: 'CartPage',
@@ -13,7 +13,7 @@ export default {
             store,
             // funzionava prima allOrder: JSON.parse(localStorage.getItem('orders')),
             allOrder: JSON.parse(localStorage.getItem('orders')) ? JSON.parse(localStorage.getItem('orders')) : [],
-            form: emptyForm,
+            form: { delivery_address: '', customer_name: '', customer_surname: '', customer_phone_number: '', customer_email: '', total_price: '', is_paid: false },
             errors: {},
             alertMessage: null,
             // newCustomer:{
@@ -181,9 +181,9 @@ export default {
             <div class="mb-3 col-12">
                 <label for="customer_address" class="form-label">Indirizzo</label>
                 <input type="text" class="form-control" :class="{ 'is-invalid': errors.customer_address }"
-                    id="customer_address" name="customer_address" v-model.trim="form.customer_address">
+                    id="customer_address" name="customer_address" v-model.trim="form.delivery_address">
                 <div class="invalid-feedback">
-                    {{ errors.customer_address }}
+                    {{ errors.delivery_address }}
                 </div>
             </div>
             <div class="mb-3 col-6">
@@ -203,8 +203,10 @@ export default {
                 </div>
             </div>
 
+            <input type="hidden" v-model.trim="totalPrice">
+
             <div class="d-flex justify-content-end">
-                <button type="submit" class="btn btn-custom-secondary">Vai al pagamrento</button>
+                <button type="submit" class="btn btn-custom-secondary">Vai al pagamento</button>
             </div>
         </form>
     </div>
