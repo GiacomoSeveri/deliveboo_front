@@ -56,12 +56,7 @@ export default {
                 Torna al ristorante
             </router-link>
 
-<<<<<<< HEAD
-            <router-link v-if="store.restaurantDetailsId === undefined" :to="{ name: 'home' }"
-                class="btn btn-custom-secondary"><i class="fa-solid fa-house"></i>
-=======
             <router-link v-if="store.restaurantDetailsId < 1" :to="{ name: 'home' }" class="btn btn-custom-secondary">
->>>>>>> 54f9973f82b377e9cd11cddfcb317e7e1b3fafc4
                 Torna alla home
             </router-link>
 
