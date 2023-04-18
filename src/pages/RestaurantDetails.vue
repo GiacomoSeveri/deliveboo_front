@@ -30,12 +30,23 @@ export default {
             restaurant_id: 0,
         }
     },
+    computed: {
+        // setAmount() {
+        //     const storage = localStorage.getItem('orders')
+        //     if (storage || store.cart) {
+        //         const res_id = JSON.parse(storage).restaurant_id
+        //         const dish_id = JSON.parse(storage).id
+        //     }
+        // }
+
+    },
     methods: {
         fetchRestaurant() {
             this.isLoading = true;
             axios.get(apiUrlRestaurant + this.$route.params.id)
                 .then(res => {
                     this.restaurant = res.data;
+                    this.setAmount();
                 })
                 .catch(() => { this.hasError = true })
                 .then(() => { this.isLoading = false })
@@ -64,14 +75,14 @@ export default {
                 .catch(() => { this.hasError = true })
                 .then(() => { this.isLoading = false })
         },
-        /*
+
         setAmount() {
             this.amounts = [];
             store.counting_amounts = [];
             if (localStorage.getItem('orders')) {
                 console.log('asd: ' + JSON.parse(localStorage.getItem('orders'))[0].restaurant_id)
                 console.log(this.restaurant)
-                if (JSON.parse(localStorage.getItem('orders'))[0].restaurant_id === store.restaurantDetailsId) {
+                if (JSON.parse(localStorage.getItem('orders'))[0].restaurant_id === this.restaurant.id) {
                     JSON.parse(localStorage.getItem('orders')).forEach(item => {
                         item.amount
                         store.counting_amounts.push(item.amount)
@@ -83,7 +94,7 @@ export default {
                 }
             }
         },
-        */
+
         addMeal(text, price, amount, currentId, restaurant_id) {
             this.text = text;
             this.price = price;
@@ -212,9 +223,10 @@ export default {
         this.fetchDish()
         // // this.fetchType();
         this.fillStore();
-        //this.setAmount();
-        console.log('current id on store: ' + store.current_restaurant_id)
-        console.log(this.restaurant_dishes)
+        this.setAmount();
+        //console.log('current id on store: ' + store.current_restaurant_id)
+        //console.log(this.restaurant_dishes)
+
     }
 }
 </script>
@@ -259,6 +271,8 @@ export default {
                     <div class="d-flex justify-content-start align-items-center">
                         <p class="m-0 mt-1 p-0 text-custom-secondary">{{ dish["price"] }} €</p>
 
+                        <!-- <input v-if="quantity" name="amount" v-model="quantity" type="number" min="1" step="1"
+                                                             class="mx-3 mt-1"> -->
                         <input name="amount" v-model="amounts[i]" type="number" min="1" step="1" class="mx-3 mt-1">
 
                         <button v-if="amount > 0 && currentId === dish['id']" type="submit"
