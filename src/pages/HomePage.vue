@@ -97,12 +97,16 @@ export default {
             // }
         },
 
+        clearFilterType() {
+            store.selected_types = []
+            return
+        },
 
     },
-
     created() {
         this.fetchTypes();
         this.fetchRestaurants();
+        this.clearFilterType();
     }
 }
 </script>
