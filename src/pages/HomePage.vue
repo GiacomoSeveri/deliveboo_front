@@ -61,6 +61,7 @@ export default {
                     if (single_type == value) {
                         console.log('B')
                         store.selected_types.splice(i, 1);
+                        this.searchRestaurant()
                         console.log(store.selected_types);
                         contain = true
                     }
@@ -72,6 +73,7 @@ export default {
             }
             store.selected_types.push(value);
             console.log('D')
+            this.searchRestaurant()
 
             // console.log('quetso =>', store.selected_types[store.selected_types.length - 1])
         },
@@ -82,27 +84,77 @@ export default {
             if (this.nameFilter === '') {
                 store.isThereRestaurant = true;
                 this.filteredRestaurants = this.restaurants;
-                console.log('1')
+
             } else {
+
                 this.filteredRestaurants = this.restaurants.filter(restaurant => restaurant.name.toLowerCase().includes(this.nameFilter.toLowerCase()));
-                this.filteredRestaurants.length ? store.isThereRestaurant = true : store.isThereRestaurant = false;
             }
 
-
-
-            // if (this.nameFilter.length) {
-            //     this.filteredRestaurants = this.restaurants.filter(restaurant => restaurant.name.toLowerCase().includes(this.nameFilter.toLowerCase()));
-            // } else {
-            //     this.filteredRestaurants = this.restaurants;
-            // }
+            if (this.filteredRestaurants.length && this.existingRestaurantsFilteredByType()) {
+                store.isThereRestaurant = true
+            } else {
+                store.isThereRestaurant = false;
+            }
+            //this.filteredRestaurants.length ? store.isThereRestaurant = true : store.isThereRestaurant = false;
         },
 
+
+
+        // if (this.nameFilter.length) {
+        //     this.filteredRestaurants = this.restaurants.filter(restaurant => restaurant.name.toLowerCase().includes(this.nameFilter.toLowerCase()));
+        // } else {
+        //     this.filteredRestaurants = this.restaurants;
+        // }
         clearFilterType() {
             store.selected_types = []
             return
         },
 
+        existingRestaurantsFilteredByType() {
+            let flagExistingRestaurant = false
+            let flagSingleType = true;
+            let closingCicle = false;
+            if (!store.selected_types.length) {
+                return true
+            } else {
+
+                this.filteredRestaurants.forEach(element => {
+                    for (let x = 0; x < store.selected_types.length; x++) {
+
+                        if (x == 0 || closingCicle) {
+
+                            for (let indexTypeRestaurant = 0; indexTypeRestaurant < element.types.length; indexTypeRestaurant++) {
+                                if (indexTypeRestaurant == 0) {
+                                    flagSingleType = false;
+                                }
+
+                                if (element.types[indexTypeRestaurant].name == store.selected_types[x]) {
+                                    flagSingleType = true;
+                                }
+
+                                if (indexTypeRestaurant == element.types.length - 1 && flagSingleType) {
+                                    closingCicle = true;
+                                } else {
+                                    closingCicle = false;
+                                }
+                                console.log('questo store + ristorante type=>', closingCicle, store.selected_types[x])
+
+                            }
+                        } if (x == store.selected_types.length - 1 && closingCicle) {
+                            flagExistingRestaurant = true
+                        }
+
+
+                    }
+                })
+
+                return flagExistingRestaurant
+            }
+        }
     },
+
+
+
     created() {
         this.fetchTypes();
         this.fetchRestaurants();
