@@ -93,11 +93,36 @@ export default {
                 <span>
                     Prezzo Totale: €{{ totalPrice }}
                 </span>
-                <form action="">
-                    <button class="btn btn-custom-secondary">Conferma Ordine</button>
-                </form>
             </div>
         </div>
+
+        <h4 class="mt-4" v-if="allOrder.length">Infomazioni di consegna</h4>
+        <form action="" v-if="allOrder.length" class="row">
+            <div class="mb-3 col-6">
+                <label for="customer_name" class="form-label">Nome</label>
+                <input type="text" class="form-control" id="customer_name">
+            </div>
+            <div class="mb-3 col-6">
+                <label for="customer_surname" class="form-label">Cognome</label>
+                <input type="text" class="form-control" id="customer_surname">
+            </div>
+            <div class="mb-3 col-12">
+                <label for="customer_address" class="form-label">Indirizzo</label>
+                <input type="text" class="form-control" id="customer_address">
+            </div>
+            <div class="mb-3 col-6">
+                <label for="customer_email" class="form-label">Indirizzo Email</label>
+                <input type="email" class="form-control" id="customer_email">
+            </div>
+            <div class="mb-3 col-6">
+                <label for="customer_phone_number" class="form-label">Numero di Telefono</label>
+                <input type="tel" class="form-control" id="customer_phone_number">
+            </div>
+
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-custom-secondary">Vai al pagamrento</button>
+            </div>
+        </form>
     </div>
 </template>
 
