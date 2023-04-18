@@ -1,5 +1,10 @@
 <script>
 import { store } from '../data/store';
+import axios from 'axios';
+import AppAlert from '../components/AppAlert.vue';
+const endPointCustomerInfo = 'http://127.0.0.1:8000/api/orders';
+const endPointOrders = 'http://127.0.0.1:8000/api';
+const emptyForm = { customer_name: '', customer_surname: '', customer_address: '', customer_email: '', customer_phone_number: '' }
 
 export default {
     name: 'CartPage',
@@ -7,9 +12,20 @@ export default {
         return {
             store,
             // funzionava prima allOrder: JSON.parse(localStorage.getItem('orders')),
-            allOrder: JSON.parse(localStorage.getItem('orders')) ? JSON.parse(localStorage.getItem('orders')) : []
+            allOrder: JSON.parse(localStorage.getItem('orders')) ? JSON.parse(localStorage.getItem('orders')) : [],
+            form: emptyForm,
+            errors: {},
+            alertMessage: null,
+            // newCustomer:{
+            //     customer_name:'',
+            //     customer_surname:'',
+            //     customer_address:'',
+            //     customer_email: '',
+            //     customer_phone_number: ''
+            // }
         }
     },
+    components: { AppAlert },
     methods: {
         deleteFromCart(i) {
             this.allOrder.splice(i, 1);
@@ -27,6 +43,51 @@ export default {
         },
         getMeals() {
             localStorage.getItem('orders') ? JSON.parse(localStorage.getItem('orders')) : [];
+        },
+        validateCustomerForm() {
+            this.errors = {};
+            const errors = {};
+
+
+            if (!this.form.customer_name) {
+                errors.customer_name = "Il nome è obbligatorio"
+            }
+            if (!this.form.customer_surname) {
+                errors.customer_surname = "Il cognome è obbligatorio"
+            }
+            if (!this.form.customer_email) {
+                errors.customer_email = 'L\'email è obbligatoria!'
+            }
+            if (!this.form.customer_phone_number) {
+                errors.customer_phone_number = 'Il numero di telefono è obbligatorio'
+            }
+            if (!this.form.customer_address) {
+                errors.customer_address = 'L\'idirizzo di consegna è obbligatorio'
+            }
+            this.errors = errors;
+        },
+        sendCustomerForm() {
+            this.validateCustomerForm();
+            console.log('ciao')
+            if (!this.hasErrors) {
+                // this.isLoading = true;
+                axios.post(endPointCustomerInfo, this.form)
+                    .then(() => {
+                        this.form = { customer_name: '', customer_surname: '', customer_address: '', customer_email: '', customer_phone_number: '' };
+                    })
+                    .catch(err => {
+                        if (err.response.status === 400) {
+                            const { errors } = err.response.data;
+                            const errorMessages = {};
+                            for (let key in errors) errorMessages[key] = errors[key][0];
+                            this.errors = errorMessages;
+                        } else {
+                            this.errors = { network: 'Si è verificato un errore' };
+
+                        }
+                    })
+                    .then(() => { })
+            }
         }
     },
     computed: {
@@ -36,6 +97,9 @@ export default {
                 totalPrice += this.allOrder[i].price * this.allOrder[i].amount
             }
             return totalPrice
+        },
+        hasErrors() {
+            return Object.keys(this.errors).length;
         }
     },
     created() {
@@ -97,26 +161,46 @@ export default {
         </div>
 
         <h4 class="mt-4" v-if="allOrder.length">Infomazioni di consegna</h4>
-        <form action="" v-if="allOrder.length" class="row">
+        <form @submit.prevent="sendCustomerForm" novalidate v-if="allOrder.length" class="row">
             <div class="mb-3 col-6">
                 <label for="customer_name" class="form-label">Nome</label>
-                <input type="text" class="form-control" id="customer_name">
+                <input type="text" class="form-control" :class="{ 'is-invalid': errors.customer_name }" id="customer_name"
+                    name="customer_name" v-model.trim="form.customer_name">
+                <div class="invalid-feedback">
+                    {{ errors.customer_name }}
+                </div>
             </div>
             <div class="mb-3 col-6">
                 <label for="customer_surname" class="form-label">Cognome</label>
-                <input type="text" class="form-control" id="customer_surname">
+                <input type="text" class="form-control" :class="{ 'is-invalid': errors.customer_surname }"
+                    id="customer_surname" name="customer_surname" v-model.trim="form.customer_surname">
+                <div class="invalid-feedback">
+                    {{ errors.customer_surname }}
+                </div>
             </div>
             <div class="mb-3 col-12">
                 <label for="customer_address" class="form-label">Indirizzo</label>
-                <input type="text" class="form-control" id="customer_address">
+                <input type="text" class="form-control" :class="{ 'is-invalid': errors.customer_address }"
+                    id="customer_address" name="customer_address" v-model.trim="form.customer_address">
+                <div class="invalid-feedback">
+                    {{ errors.customer_address }}
+                </div>
             </div>
             <div class="mb-3 col-6">
                 <label for="customer_email" class="form-label">Indirizzo Email</label>
-                <input type="email" class="form-control" id="customer_email">
+                <input type="email" class="form-control" :class="{ 'is-invalid': errors.customer_email }"
+                    id="customer_email" name="customer_email" v-model.trim="form.customer_email">
+                <div class="invalid-feedback">
+                    {{ errors.customer_email }}
+                </div>
             </div>
             <div class="mb-3 col-6">
                 <label for="customer_phone_number" class="form-label">Numero di Telefono</label>
-                <input type="tel" class="form-control" id="customer_phone_number">
+                <input type="tel" class="form-control" :class="{ 'is-invalid': errors.customer_phone_number }"
+                    id="customer_phone_number" name="customer_phone_number" v-model.trim="form.customer_phone_number">
+                <div class="invalid-feedback">
+                    {{ errors.customer_phone_number }}
+                </div>
             </div>
 
             <div class="d-flex justify-content-end">
@@ -127,7 +211,8 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-h1 {
+h1,
+h4 {
     color: var(--d-blue);
 }
 
