@@ -111,6 +111,14 @@ export default {
                 let storage_dishes = []
                 let storage_first_restaurant_id = 0
 
+                // removing dish from input in page restaurant details
+                if (amount === 0) {
+                    if (localStorage.getItem('orders')) {
+                        localStorage.removeItem('orders')
+                        store.cart = []
+                    }
+                }
+
 
                 if (JSON.parse(localStorage.getItem('orders'))) {
                     storage_dishes = JSON.parse(localStorage.getItem('orders'))
@@ -206,6 +214,7 @@ export default {
         this.fillStore();
         //this.setAmount();
         console.log('current id on store: ' + store.current_restaurant_id)
+        console.log(this.restaurant_dishes)
     }
 }
 </script>
@@ -248,10 +257,13 @@ export default {
                     <div class="d-flex justify-content-start align-items-center">
                         <p class="m-0 mt-1 p-0 text-custom-secondary">{{ dish["price"] }} €</p>
 
-                        <input name="amount" v-model="amounts[i]" type="number" min="0" step="1" placeholder="0"
-                            class="mx-3 mt-1">
+                        <input name="amount" v-model="amounts[i]" type="number" min="1" step="1" class="mx-3 mt-1">
 
-                        <button type="submit" class="btn btn-custom-secondary d-flex align-items-center">
+                        <button v-if="amount > 0 && currentId === dish['id']" type="submit"
+                            class="btn btn-custom-secondary d-flex align-items-center">
+                            Aggiorna quantità
+                        </button>
+                        <button v-else type="submit" class="btn btn-custom-secondary d-flex align-items-center">
                             <i class="fa-solid fa-cart-plus"></i>
                         </button>
                     </div>
@@ -323,10 +335,11 @@ p {
 }
 
 input {
-    border-radius: 15px;
-    max-width: 85px;
+    border-radius: 10px;
+    max-width: 55px;
     padding: 0px 10px;
     color: var(--l-blue);
+    border: solid 1px var(--l-blue);
 }
 
 input:focus-visible {
