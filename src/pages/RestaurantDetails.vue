@@ -215,7 +215,26 @@ export default {
             this.showModal = false;
 
             this.addMeal(this.text, this.price, this.amount, this.currentId, this.restaurant_id)
+        },
+
+        changeButton(dish_id) {
+            // passare id del piatto specifico
+            // fare un include nell'array dei dishes_id
+            // return del valore true/false
+            const dishes_id = [];
+            let isButtonTexted = false;
+            if (store.cart.length) {
+                JSON.parse(localStorage.getItem('orders')).forEach(dish => {
+                    dishes_id.push(dish.id)
+                });
+            }
+
+            if (dishes_id.includes(dish_id)) {
+                isButtonTexted = true;
+            }
+            return isButtonTexted
         }
+
 
     },
     created() {
@@ -272,10 +291,10 @@ export default {
                         <p class="m-0 mt-1 p-0 text-custom-secondary">{{ dish["price"] }} €</p>
 
                         <!-- <input v-if="quantity" name="amount" v-model="quantity" type="number" min="1" step="1"
-                                                             class="mx-3 mt-1"> -->
+                                                                                                                         class="mx-3 mt-1"> -->
                         <input name="amount" v-model="amounts[i]" type="number" min="1" step="1" class="mx-3 mt-1">
 
-                        <button v-if="amount > 0 && currentId === dish['id']" type="submit"
+                        <button v-if="changeButton(dish.id)" type="submit"
                             class="btn btn-custom-secondary d-flex align-items-center">
                             Aggiorna quantità
                         </button>
