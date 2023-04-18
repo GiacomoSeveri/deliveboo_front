@@ -254,6 +254,8 @@ export default {
                         <h2 class="p-0 custom-text-title">{{ dish["name"] }}</h2>
                         <p class="mb-5 p-0 fs-5">{{ dish["description"] }}</p>
                     </div>
+
+                    <!-- price, input and button -->
                     <div class="d-flex justify-content-start align-items-center">
                         <p class="m-0 mt-1 p-0 text-custom-secondary">{{ dish["price"] }} €</p>
 
@@ -267,6 +269,7 @@ export default {
                             <i class="fa-solid fa-cart-plus"></i>
                         </button>
                     </div>
+
                 </div>
                 <img :src="dish.image" class="img-dish img-fluid" :alt="dish.name">
             </form>
