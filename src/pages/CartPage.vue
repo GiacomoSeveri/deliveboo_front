@@ -13,13 +13,11 @@ export default {
             store,
             // funzionava prima allOrder: JSON.parse(localStorage.getItem('orders')),
             allOrder: JSON.parse(localStorage.getItem('orders')) ? JSON.parse(localStorage.getItem('orders')) : [],
-            customerForm: { delivery_address: '', customer_name: '', customer_surname: '', customer_phone_number: '', customer_email: '', total_price: 0, is_paid: false, dishesIdArray: [], amount: [] },
-            //orderForm: {dish_id: '', order_id: '', amount:''},
+            form: { delivery_address: '', customer_name: '', customer_surname: '', customer_phone_number: '', customer_email: '', total_price: 0, is_paid: false, dishes_id: [], amounts: [] },
             isLoading: false,
-            //hasErrors: false,
+            has_errors: false,
             errors: {},
             alertMessage: null,
-            dishesIdArray: []
         }
     },
     components: { AppAlert },
@@ -72,7 +70,7 @@ export default {
                     this.form = { delivery_address: '', customer_name: '', customer_surname: '', customer_phone_number: '', customer_email: '', total_price: 0, is_paid: false };
                 })
                 .catch(err => {
-                    this.hasErrors = true;
+                    this.has_errors = true;
                     if (err.response.status === 400) {
                         const { errors } = err.response.data;
                         const errorMessages = {};
@@ -102,18 +100,36 @@ export default {
         },
 
         dishesId() {
+            const dishesIdArray = []
             if (localStorage.getItem('orders')) {
                 JSON.parse(localStorage.getItem('orders')).forEach(dish => {
-                    this.dishesIdArray.push(dish.id)
+                    dishesIdArray.push(dish.id)
                 })
             }
+            this.form.dishes_id = dishesIdArray;
+            return dishesIdArray
+        },
 
-        }
+        allAmountsArray() {
+            const amountsArray = []
+            this.allOrder.forEach(dish => {
+                amountsArray.push(dish.amount)
+            })
+            this.form.amounts = amountsArray;
+            return amountsArray
+        },
+
+        // dishesOrders() {
+        //     const dishesOrders = []
+        //     for (let i = 0; i < dishes_id.length; i++) {
+        //         const dishOrder = {dish_id: };
+
+        //     }
+        // }
 
     },
     created() {
         store.restaurantDetailsId = localStorage.getItem('orders') ? JSON.parse(localStorage.getItem('orders'))[0].restaurant_id : undefined;
-        console.log(store.restaurantDetailsId);
     }
 }
 </script>
@@ -215,6 +231,8 @@ export default {
             </div>
 
             <input type="hidden" v-model.trim="totalPrice">
+            <input type="hidden" v-model.trim="dishesId">
+            <input type="hidden" v-model.trim="allAmountsArray">
 
             <div class="d-flex justify-content-end">
                 <button type="submit" class="btn btn-custom-secondary">Vai al pagamento</button>
