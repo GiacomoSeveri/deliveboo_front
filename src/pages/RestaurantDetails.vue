@@ -220,13 +220,8 @@ export default {
             <p><span class="text-danger">Attenzione!</span></p>
             <p>Stai visitando un altro ristorante. Se intendi aggiungere questo piatto al carrello, verranno cancellate le
                 tue precedenti scelte.</p>
-<<<<<<< HEAD
-            <p>Sei sicuro di voler svuotare il carrello?</p>
-            <button class="btn btn-custom-secondary me-3" type="button" @click="changeDish">Svuota Carrello</button>
-=======
             <p>Sei sicuro di voler procedere?</p>
             <button class="btn btn-custom-secondary me-3" type="button" @click="changeDish">Procedi</button>
->>>>>>> 54f9973f82b377e9cd11cddfcb317e7e1b3fafc4
             <button class="btn btn-custom-secondary" type="button" @click="cancel">Annulla</button>
         </div>
     </div>
