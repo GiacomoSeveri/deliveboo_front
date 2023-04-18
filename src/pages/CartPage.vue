@@ -13,12 +13,13 @@ export default {
             store,
             // funzionava prima allOrder: JSON.parse(localStorage.getItem('orders')),
             allOrder: JSON.parse(localStorage.getItem('orders')) ? JSON.parse(localStorage.getItem('orders')) : [],
-            form: { delivery_address: '', customer_name: '', customer_surname: '', customer_phone_number: '', customer_email: '', total_price: 0, is_paid: false },
+            customerForm: { delivery_address: '', customer_name: '', customer_surname: '', customer_phone_number: '', customer_email: '', total_price: 0, is_paid: false, dishesIdArray: [], amount: [] },
+            //orderForm: {dish_id: '', order_id: '', amount:''},
             isLoading: false,
-            hasErrors: false,
+            //hasErrors: false,
             errors: {},
             alertMessage: null,
-
+            dishesIdArray: []
         }
     },
     components: { AppAlert },
@@ -95,9 +96,20 @@ export default {
             this.form.total_price = totalPrice;
             return totalPrice
         },
+
         hasErrors() {
             return Object.keys(this.errors).length;
+        },
+
+        dishesId() {
+            if (localStorage.getItem('orders')) {
+                JSON.parse(localStorage.getItem('orders')).forEach(dish => {
+                    this.dishesIdArray.push(dish.id)
+                })
+            }
+
         }
+
     },
     created() {
         store.restaurantDetailsId = localStorage.getItem('orders') ? JSON.parse(localStorage.getItem('orders'))[0].restaurant_id : undefined;
