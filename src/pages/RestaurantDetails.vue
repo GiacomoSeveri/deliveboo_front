@@ -11,7 +11,6 @@ export default {
     props: { res_type: Object },
     data() {
         return {
-            message: 'Attenzione, stai aggiungendo al carrello un piatto di un ristorante diverso da quello presente nel carrello, così facendo cancellerai tutti i piatti finora inseriti ed inizierai un nuovo ordine. Sei sicuro di voler procedere?',
             restaurant: {},
             dishes: [],
             restaurant_dishes: [],
@@ -22,6 +21,13 @@ export default {
             hasError: false,
             showModal: false,
             canProceed: false,
+
+            // variables taken from function addMeal
+            text: '',
+            price: 0,
+            amount: 0,
+            currentId: 0,
+            restaurant_id: 0,
         }
     },
     methods: {
@@ -79,6 +85,11 @@ export default {
         },
         */
         addMeal(text, price, amount, currentId, restaurant_id) {
+            this.text = text;
+            this.price = price;
+            this.amount = amount;
+            this.currentId = currentId;
+            this.restaurant_id = restaurant_id;
 
             if (store.current_restaurant_id) {
                 if (store.current_restaurant_id === 0) {
@@ -183,6 +194,8 @@ export default {
             store.current_restaurant_id = this.restaurant['id'];
             this.canProceed = true;
             this.showModal = false;
+
+            this.addMeal(this.text, this.price, this.amount, this.currentId, this.restaurant_id)
         }
 
     },
@@ -207,7 +220,7 @@ export default {
             <p><span class="text-danger">Attenzione!</span></p>
             <p>Stai visitando un altro ristorante. Se intendi aggiungere questo piatto al carrello, verranno cancellate le
                 tue precedenti scelte.</p>
-            <p>Sei sicuro di voler svuotare il carrello?</p>
+            <p>Sei sicuro di voler procedere?</p>
             <button class="btn btn-custom-secondary me-3" type="button" @click="changeDish">Procedi</button>
             <button class="btn btn-custom-secondary" type="button" @click="cancel">Annulla</button>
         </div>

@@ -38,8 +38,8 @@ export default {
             return totalPrice
         }
     },
-    created() {
-        store.restaurantDetailsId = localStorage.getItem('orders') ? JSON.parse(localStorage.getItem('orders'))[0].restaurant_id : undefined;
+    mounted() {
+        store.restaurantDetailsId = localStorage.getItem('orders') ? JSON.parse(localStorage.getItem('orders'))[0].restaurant_id : store.current_restaurant_id;
         console.log(store.restaurantDetailsId);
     }
 }
