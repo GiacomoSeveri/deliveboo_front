@@ -11,7 +11,6 @@ export default {
     props: { res_type: Object },
     data() {
         return {
-            message: 'Attenzione, stai aggiungendo al carrello un piatto di un ristorante diverso da quello presente nel carrello, così facendo cancellerai tutti i piatti finora inseriti ed inizierai un nuovo ordine. Sei sicuro di voler procedere?',
             restaurant: {},
             dishes: [],
             restaurant_dishes: [],
@@ -22,7 +21,24 @@ export default {
             hasError: false,
             showModal: false,
             canProceed: false,
+
+            // variables taken from function addMeal
+            text: '',
+            price: 0,
+            amount: 0,
+            currentId: 0,
+            restaurant_id: 0,
         }
+    },
+    computed: {
+        // setAmount() {
+        //     const storage = localStorage.getItem('orders')
+        //     if (storage || store.cart) {
+        //         const res_id = JSON.parse(storage).restaurant_id
+        //         const dish_id = JSON.parse(storage).id
+        //     }
+        // }
+
     },
     methods: {
         fetchRestaurant() {
@@ -30,6 +46,7 @@ export default {
             axios.get(apiUrlRestaurant + this.$route.params.id)
                 .then(res => {
                     this.restaurant = res.data;
+                    this.setAmount();
                 })
                 .catch(() => { this.hasError = true })
                 .then(() => { this.isLoading = false })
@@ -58,14 +75,14 @@ export default {
                 .catch(() => { this.hasError = true })
                 .then(() => { this.isLoading = false })
         },
-        /*
+
         setAmount() {
             this.amounts = [];
             store.counting_amounts = [];
             if (localStorage.getItem('orders')) {
                 console.log('asd: ' + JSON.parse(localStorage.getItem('orders'))[0].restaurant_id)
                 console.log(this.restaurant)
-                if (JSON.parse(localStorage.getItem('orders'))[0].restaurant_id === store.restaurantDetailsId) {
+                if (JSON.parse(localStorage.getItem('orders'))[0].restaurant_id === this.restaurant.id) {
                     JSON.parse(localStorage.getItem('orders')).forEach(item => {
                         item.amount
                         store.counting_amounts.push(item.amount)
@@ -77,8 +94,13 @@ export default {
                 }
             }
         },
-        */
+
         addMeal(text, price, amount, currentId, restaurant_id) {
+            this.text = text;
+            this.price = price;
+            this.amount = amount;
+            this.currentId = currentId;
+            this.restaurant_id = restaurant_id;
 
             if (store.current_restaurant_id) {
                 if (store.current_restaurant_id === 0) {
@@ -99,6 +121,14 @@ export default {
                 let targetId = 0
                 let storage_dishes = []
                 let storage_first_restaurant_id = 0
+
+                // removing dish from input in page restaurant details
+                if (amount === 0) {
+                    if (localStorage.getItem('orders')) {
+                        localStorage.removeItem('orders')
+                        store.cart = []
+                    }
+                }
 
 
                 if (JSON.parse(localStorage.getItem('orders'))) {
@@ -183,7 +213,28 @@ export default {
             store.current_restaurant_id = this.restaurant['id'];
             this.canProceed = true;
             this.showModal = false;
+
+            this.addMeal(this.text, this.price, this.amount, this.currentId, this.restaurant_id)
+        },
+
+        changeButton(dish_id) {
+            // passare id del piatto specifico
+            // fare un include nell'array dei dishes_id
+            // return del valore true/false
+            const dishes_id = [];
+            let isButtonTexted = false;
+            if (store.cart.length) {
+                JSON.parse(localStorage.getItem('orders')).forEach(dish => {
+                    dishes_id.push(dish.id)
+                });
+            }
+
+            if (dishes_id.includes(dish_id)) {
+                isButtonTexted = true;
+            }
+            return isButtonTexted
         }
+
 
     },
     created() {
@@ -191,8 +242,10 @@ export default {
         this.fetchDish()
         // // this.fetchType();
         this.fillStore();
-        //this.setAmount();
-        console.log('current id on store: ' + store.current_restaurant_id)
+        this.setAmount();
+        //console.log('current id on store: ' + store.current_restaurant_id)
+        //console.log(this.restaurant_dishes)
+
     }
 }
 </script>
@@ -207,7 +260,7 @@ export default {
             <p><span class="text-danger">Attenzione!</span></p>
             <p>Stai visitando un altro ristorante. Se intendi aggiungere questo piatto al carrello, verranno cancellate le
                 tue precedenti scelte.</p>
-            <p>Sei sicuro di voler svuotare il carrello?</p>
+            <p>Sei sicuro di voler procedere?</p>
             <button class="btn btn-custom-secondary me-3" type="button" @click="changeDish">Procedi</button>
             <button class="btn btn-custom-secondary" type="button" @click="cancel">Annulla</button>
         </div>
@@ -232,16 +285,24 @@ export default {
                         <h2 class="p-0 custom-text-title">{{ dish["name"] }}</h2>
                         <p class="mb-5 p-0 fs-5">{{ dish["description"] }}</p>
                     </div>
+
+                    <!-- price, input and button -->
                     <div class="d-flex justify-content-start align-items-center">
                         <p class="m-0 mt-1 p-0 text-custom-secondary">{{ dish["price"] }} €</p>
 
-                        <input name="amount" v-model="amounts[i]" type="number" min="0" step="1" placeholder="0"
-                            class="mx-3 mt-1">
+                        <!-- <input v-if="quantity" name="amount" v-model="quantity" type="number" min="1" step="1"
+                                                                                                                         class="mx-3 mt-1"> -->
+                        <input name="amount" v-model="amounts[i]" type="number" min="1" step="1" class="mx-3 mt-1">
 
-                        <button type="submit" class="btn btn-custom-secondary d-flex align-items-center">
+                        <button v-if="changeButton(dish.id)" type="submit"
+                            class="btn btn-custom-secondary d-flex align-items-center">
+                            Aggiorna quantità
+                        </button>
+                        <button v-else type="submit" class="btn btn-custom-secondary d-flex align-items-center">
                             <i class="fa-solid fa-cart-plus"></i>
                         </button>
                     </div>
+
                 </div>
                 <img :src="dish.image" class="img-dish img-fluid" :alt="dish.name">
             </form>
@@ -310,10 +371,11 @@ p {
 }
 
 input {
-    border-radius: 15px;
-    max-width: 85px;
+    border-radius: 10px;
+    max-width: 55px;
     padding: 0px 10px;
     color: var(--l-blue);
+    border: solid 1px var(--l-blue);
 }
 
 input:focus-visible {

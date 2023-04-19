@@ -9,11 +9,23 @@ export default {
         }
     },
     methods: {
+
         counting_order() {
+
+            let dishSum = 0;
+            let storageDishSum = 0;
+            store.cart.forEach(dish => {
+                dishSum += dish.amount
+            })
+
             if (!localStorage.getItem('orders')) {
-                return store.cart.length
+                return dishSum
             } else if (localStorage.getItem('orders')) {
-                return store.cart.length ? store.cart.length : JSON.parse(localStorage.getItem('orders')).length
+                const storage = JSON.parse(localStorage.getItem('orders'));
+                storage.forEach(storageDish => {
+                    storageDishSum += storageDish.amount
+                });
+                return store.cart.length ? dishSum : storageDishSum;
             }
         }
     }

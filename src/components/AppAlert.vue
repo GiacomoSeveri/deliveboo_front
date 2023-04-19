@@ -16,7 +16,7 @@ export default {
         <p>Mi dispiace, si è verificato un errore. Riaggiorna la pagina!</p>
     </div>
     <div class="container custom-size alert alert-warning my-5" v-if="store.isThereRestaurant === false">
-        <p>Non ci sono risultati per questa ricerca.</p>
+        <p class="m-0">Non ci sono risultati per questa ricerca.</p>
     </div>
 </template>
 

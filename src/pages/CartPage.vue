@@ -131,8 +131,9 @@ export default {
         // }
 
     },
-    created() {
-        store.restaurantDetailsId = localStorage.getItem('orders') ? JSON.parse(localStorage.getItem('orders'))[0].restaurant_id : undefined;
+    mounted() {
+        store.restaurantDetailsId = localStorage.getItem('orders') ? JSON.parse(localStorage.getItem('orders'))[0].restaurant_id : store.current_restaurant_id;
+        console.log(store.restaurantDetailsId);
     }
 }
 </script>
@@ -146,12 +147,11 @@ export default {
 
             <!-- buttons to come back -->
             <router-link v-if="store.restaurantDetailsId >= 1" :to="{ path: '/Restaurants/' + store.restaurantDetailsId }"
-                class="btn btn-custom-secondary">
+                class="btn btn-custom-secondary"><i class="fa-solid fa-reply me-2"></i>
                 Torna al ristorante
             </router-link>
 
-            <router-link v-if="store.restaurantDetailsId === undefined" :to="{ name: 'home' }"
-                class="btn btn-custom-secondary">
+            <router-link v-if="store.restaurantDetailsId < 1" :to="{ name: 'home' }" class="btn btn-custom-secondary">
                 Torna alla home
             </router-link>
 
@@ -174,7 +174,8 @@ export default {
                         <td class="custom-p">€{{ singleOrder.price * singleOrder.amount }}</td>
                         <td class="text-end custom-p">
                             <form @submit.prevent="deleteFromCart(i)">
-                                <button type="submit" class="btn btn-custom-secondary">Rimuovi dal carrello</button>
+                                <button type="submit" class="btn btn-custom-secondary"><i
+                                        class="fa-solid fa-xmark me-2"></i>Rimuovi dal carrello</button>
                             </form>
                         </td>
                     </tr>
@@ -187,6 +188,9 @@ export default {
                 <span>
                     Prezzo Totale: €{{ totalPrice }}
                 </span>
+
+                <a href="http://127.0.0.1:8000/payments" class="btn btn-custom-secondary">Completa ordine</a>
+
             </div>
         </div>
 
