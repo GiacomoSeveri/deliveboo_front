@@ -57,7 +57,7 @@ export default {
     animation-delay: 5s;
     animation-fill-mode: forwards;
 
-    z-index: 3;
+    z-index: 7;
 
     // MASK---------------
     .mask-1 {
