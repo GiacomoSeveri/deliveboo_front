@@ -13,7 +13,7 @@ export default {
             store,
             // funzionava prima allOrder: JSON.parse(localStorage.getItem('orders')),
             allOrder: JSON.parse(localStorage.getItem('orders')) ? JSON.parse(localStorage.getItem('orders')) : [],
-            form: { delivery_address: '', customer_name: '', customer_surname: '', customer_phone_number: '', customer_email: '', total_price: 0, is_paid: false, dishes_id: [], amounts: [] },
+            form: { delivery_address: '', customer_name: '', customer_surname: '', customer_phone_number: '', customer_email: '', total_price: 0, is_paid: true, dishes_id: [], amounts: [] },
             isLoading: false,
             has_errors: false,
             errors: {},
@@ -67,7 +67,7 @@ export default {
             this.isLoading = true;
             axios.post(endPointCustomerInfo, this.form)
                 .then(() => {
-                    this.form = { delivery_address: '', customer_name: '', customer_surname: '', customer_phone_number: '', customer_email: '', total_price: 0, is_paid: false, dishes_id: [], amounts: [] };
+                    this.form = { delivery_address: '', customer_name: '', customer_surname: '', customer_phone_number: '', customer_email: '', total_price: 0, is_paid: true, dishes_id: [], amounts: [] };
                 })
                 .catch(err => {
                     this.has_errors = true;
@@ -81,7 +81,10 @@ export default {
 
                     }
                 })
-                .then(() => { this.isLoading = false })
+                .then(() => {
+                    this.isLoading = false;
+                    window.location.replace("http://127.0.0.1:8000/payments");
+                })
             //}
         }
     },
@@ -235,7 +238,7 @@ export default {
             <input type="hidden" v-model.trim="allAmountsArray">
 
             <div class="d-flex justify-content-end">
-                <button type="submit" class="btn btn-custom-secondary">Vai al pagamento</button>
+                <button type="submit" class="btn btn-custom-secondary">Conferma dati</button>
             </div>
         </form>
     </div>
