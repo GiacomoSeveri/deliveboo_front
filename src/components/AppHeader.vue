@@ -33,7 +33,7 @@ export default {
 </script>
 
 <template>
-    <nav class="navbar navbar-expand-md bg-orange">
+    <nav class="navbar navbar-expand-md bg-custom-secondary header-style">
         <div class="container">
             <div class="w-100 d-flex justify-content-between">
                 <div class="collapse navbar-collapse d-flex justify-content-between align-items-center p-0"
@@ -83,8 +83,7 @@ h2 {
     color: white
 }
 
-.bg-orange {
-    background-color: var(--p-orange);
+.header-style {
     min-height: 120px;
     box-shadow: 0 2px 5px 1px rgba(0, 0, 0, 0.1);
 
