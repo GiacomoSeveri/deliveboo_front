@@ -239,7 +239,7 @@ export default {
             <input type="hidden" v-model.trim="dishesId">
             <input type="hidden" v-model.trim="allAmountsArray">
 
-            <div class="d-flex justify-content-end">
+            <div class="d-flex justify-content-end mb-4">
                 <button type="submit" class="btn btn-custom-secondary">Conferma dati</button>
             </div>
         </form>
