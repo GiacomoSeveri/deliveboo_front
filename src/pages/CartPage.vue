@@ -46,7 +46,7 @@ export default {
 </script>
 
 <template>
-    <div class="container mt-5">
+    <div class="container mt-5 h-100">
         <div class="d-flex justify-content-between align-items-center">
             <h1>Il tuo carrello</h1>
 
@@ -94,7 +94,7 @@ export default {
                     Prezzo Totale: €{{ totalPrice }}
                 </span>
 
-                <a href="http://127.0.0.1:8000/payments" class="btn btn-custom-secondary">Completa ordine</a>
+                <!-- <a href="http://127.0.0.1:8000/payments" class="btn btn-custom-secondary">Completa ordine</a> -->
 
             </div>
         </div>
@@ -107,7 +107,7 @@ h1 {
 }
 
 .container {
-    min-height: 72vh;
+    min-height: 75vh;
 }
 
 .custom-p {
