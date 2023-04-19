@@ -254,6 +254,10 @@ h4 {
     color: var(--d-blue);
 }
 
+.container {
+    min-height: 72vh;
+}
+
 .custom-p {
     padding: 10px 20px;
 }
