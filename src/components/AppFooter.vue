@@ -32,7 +32,7 @@ export default {
 
 <style lang="scss" scoped>
 .c-p {
-    padding: 25px 35px;
+    padding: 27px 35px;
 }
 
 i {
