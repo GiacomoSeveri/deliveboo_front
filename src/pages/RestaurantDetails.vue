@@ -291,15 +291,15 @@ export default {
                         <p class="m-0 mt-1 p-0 text-custom-secondary">{{ dish["price"] }} €</p>
 
                         <!-- <input v-if="quantity" name="amount" v-model="quantity" type="number" min="1" step="1"
-                                                                                                                                                 class="mx-3 mt-1"> -->
+                                                                                                                                                             class="mx-3 mt-1"> -->
                         <input name="amount" v-model="amounts[i]" type="number" min="1" step="1" class="mx-3 mt-1">
 
                         <button v-if="changeButton(dish.id)" type="submit"
-                            class="btn btn-custom-secondary d-flex align-items-center">
-                            <i class="fa-solid fa-arrow-rotate-right"></i> Aggiorna
+                            class="btn btn-sm btn-custom-secondary d-flex align-items-center">
+                            <i class="fa-solid fa-arrow-rotate-right me-2"></i> Aggiorna
                         </button>
-                        <button v-else type="submit" class="btn btn-custom-secondary d-flex align-items-center">
-                            <i class="fa-solid fa-plus"></i> Aggiungi
+                        <button v-else type="submit" class="btn btn-sm btn-custom-secondary d-flex align-items-center">
+                            <i class="fa-solid fa-plus me-2"></i> Aggiungi
                         </button>
                     </div>
 
