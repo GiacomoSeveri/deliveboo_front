@@ -28,6 +28,11 @@ body {
     color: var(--white);
 }
 
+.bg-custom-secondary {
+    background-color: var(--p-orange);
+    color: var(--white);
+}
+
 .btn-custom-secondary:hover {
     background-color: var(--d-orange);
     color: var(--white);

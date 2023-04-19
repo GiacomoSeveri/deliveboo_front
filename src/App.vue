@@ -1,8 +1,9 @@
 <script>
 import AppHeader from './components/AppHeader.vue';
+import AppFooter from './components/AppFooter.vue';
 export default {
     name: 'App',
-    components: { AppHeader },
+    components: { AppHeader, AppFooter },
 }
 </script>
 
@@ -10,6 +11,7 @@ export default {
     <!-- <AppMotion /> -->
     <AppHeader />
     <RouterView />
+    <AppFooter />
 </template> 
 
 <style lang="scss">

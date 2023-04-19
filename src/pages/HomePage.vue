@@ -121,7 +121,7 @@ export default {
 
     <!-- Types of restaurants -->
     <div class="container">
-        <div class="row">
+        <div class="row d-flex justify-content-center">
 
             <form action="" class="d-flex justify-content-center align-items-center flex-wrap">
                 <CheckBoxCard v-for="res_type in res_types" :res_type="res_type" @check-value="checkedValue" />
