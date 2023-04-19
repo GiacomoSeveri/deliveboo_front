@@ -69,6 +69,8 @@ export default {
                 .then(() => {
                     this.form = { delivery_address: '', customer_name: '', customer_surname: '', customer_phone_number: '', customer_email: '', total_price: 0, is_paid: true, dishes_id: [], amounts: [] };
                     window.location.replace("http://127.0.0.1:8000/payments");
+                    localStorage.removeItem('orders');
+                    store.cart = []
                 })
                 .catch(err => {
                     this.has_errors = true;
@@ -83,6 +85,7 @@ export default {
                     }
                 })
                 .then(() => {
+
                     this.isLoading = false;
                 })
             //}
