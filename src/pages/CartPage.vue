@@ -142,6 +142,7 @@ export default {
 </script>
 
 <template>
+    <AppLoader v-if="isLoading" />
     <div class="container mt-5 h-100">
         <div class="d-flex justify-content-between align-items-center">
             <h1>Il tuo carrello</h1>
