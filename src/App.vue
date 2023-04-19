@@ -10,10 +10,16 @@ export default {
 <template>
     <!-- <AppMotion /> -->
     <AppHeader />
-    <RouterView />
+    <div class="heigth">
+        <RouterView />
+    </div>
     <AppFooter />
 </template> 
 
 <style lang="scss">
 @use './assets/scss/style.scss';
+
+.heigth {
+    min-height: 100vh;
+}
 </style>
