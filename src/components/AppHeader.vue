@@ -105,6 +105,10 @@ h2 {
             font-weight: 700;
             font-size: 60px;
         }
+
+        // &:active {
+        //     font-size: 5rem;
+        // }
     }
 }
 
