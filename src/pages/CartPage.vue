@@ -184,7 +184,7 @@ export default {
             </div>
             <div class="custom-p d-flex justify-content-between align-items-center">
                 <span>
-                    Prezzo Totale: €{{ totalPrice }}
+                    Prezzo Totale: <b>€{{ totalPrice }}</b>
                 </span>
 
                 <!-- <a href="http://127.0.0.1:8000/payments" class="btn btn-custom-secondary">Completa ordine</a> -->
