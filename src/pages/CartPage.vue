@@ -67,7 +67,7 @@ export default {
             this.isLoading = true;
             axios.post(endPointCustomerInfo, this.form)
                 .then(() => {
-                    this.form = { delivery_address: '', customer_name: '', customer_surname: '', customer_phone_number: '', customer_email: '', total_price: 0, is_paid: false };
+                    this.form = { delivery_address: '', customer_name: '', customer_surname: '', customer_phone_number: '', customer_email: '', total_price: 0, is_paid: false, dishes_id: [], amounts: [] };
                 })
                 .catch(err => {
                     this.has_errors = true;
